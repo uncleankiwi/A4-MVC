@@ -8,7 +8,6 @@ namespace A4VG.Controllers
 {
     public class VisitController : Controller
     {
-        // GET: Visit
         public ActionResult Index()
         {
             return View();
