@@ -8,70 +8,70 @@ using System.Web.Mvc;
 
 namespace A4VG.Controllers
 {
-    public class DoctorController : Controller
-    {
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public ActionResult Create()
+	public class DoctorController : Controller
+	{
+		public ActionResult Index()
 		{
-            return View();
+			return View(new Context().Doctors);
 		}
 
-        [HttpPost]
-        public ActionResult Create(Doctor doctor)
+		[HttpGet]
+		public ActionResult Create()
 		{
-            Context context = new Context();
-            context.Doctors.Add(doctor);
-            context.SaveChanges();
-            return RedirectToAction("Index");
+			return View();
 		}
 
-        public ActionResult Details(int id)
+		[HttpPost]
+		public ActionResult Create(Doctor doctor)
 		{
-            return ViewFromId(id);
-        }
-
-        [HttpGet]
-        public ActionResult Edit(int id)
-		{
-            return ViewFromId(id);
-        }
-
-        [HttpPost]
-        public ActionResult Edit(Doctor doctor)
-		{
-            Context context = new Context();
-            context.Entry(doctor).State = EntityState.Modified;
-            context.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        [HttpGet]
-        public ActionResult Delete(int id)
-		{
-            return ViewFromId(id);
+			Context context = new Context();
+			context.Doctors.Add(doctor);
+			context.SaveChanges();
+			return RedirectToAction("Index");
 		}
 
-        [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirm(int id)
+		public ActionResult Details(int id)
 		{
-            Context context = new Context();
-            Doctor doctor = context.Doctors.Single(x => x.Id == id);
-            context.Doctors.Remove(doctor);
-            context.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        public ActionResult ViewFromId(int id)
-		{
-            Context context = new Context();
-            Doctor doctor = context.Doctors.Single(x => x.Id == id); //or context.Doctors.Find(id);
-            return View(doctor);
+			return ViewFromId(id);
 		}
 
-    }
+		[HttpGet]
+		public ActionResult Edit(int id)
+		{
+			return ViewFromId(id);
+		}
+
+		[HttpPost]
+		public ActionResult Edit(Doctor doctor)
+		{
+			Context context = new Context();
+			context.Entry(doctor).State = EntityState.Modified;
+			context.SaveChanges();
+			return RedirectToAction("Index");
+		}
+
+		[HttpGet]
+		public ActionResult Delete(int id)
+		{
+			return ViewFromId(id);
+		}
+
+		[HttpPost, ActionName("Delete")]
+		public ActionResult DeleteConfirm(int id)
+		{
+			Context context = new Context();
+			Doctor doctor = context.Doctors.Single(x => x.Id == id);
+			context.Doctors.Remove(doctor);
+			context.SaveChanges();
+			return RedirectToAction("Index");
+		}
+
+		public ActionResult ViewFromId(int id)
+		{
+			Context context = new Context();
+			Doctor doctor = context.Doctors.Single(x => x.Id == id); //or context.Doctors.Find(id);
+			return View(doctor);
+		}
+
+	}
 }
