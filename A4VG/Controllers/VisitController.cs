@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace A4VG.Controllers
 {
@@ -11,7 +12,9 @@ namespace A4VG.Controllers
     {
         public ActionResult Index()
         {
-            return View(new Context().Visits);
+            return View(new Context().Visits
+                .Include(x => x.Doctor)
+                .Include(x => x.Patient));
         }
 
         [HttpGet]
