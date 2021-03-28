@@ -11,7 +11,7 @@ namespace A4VG.Controllers
     {
         public ActionResult Index()
         {
-            return View(new Context().Patients);
+            return View(new Context().Patients.Include(x => x).ToList());
         }
 
         [HttpGet]
