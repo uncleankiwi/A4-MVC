@@ -10,6 +10,7 @@ namespace A4VG.Controllers
 {
 	public class PatientController : Controller
 	{
+		
 		public ActionResult Index()
 		{
 			return View(new Context().Patients
@@ -19,7 +20,7 @@ namespace A4VG.Controllers
 		[HttpGet]
 		public ActionResult Create()
 		{
-			return View();
+			return View(LoadDoctorsList(new Patient()));
 		}
 
 		[HttpPost]
@@ -72,6 +73,14 @@ namespace A4VG.Controllers
 			Context context = new Context();
 			Patient patient = context.Patients.Single(x => x.Id == id);
 			return View(patient);
+		}
+
+		public Patient LoadDoctorsList(Patient p)
+		{
+			SelectList selectList = new SelectList();
+
+			p.DoctorsList = new SelectList(new Context().Doctors.ToList());
+			return p;
 		}
 	}
 }

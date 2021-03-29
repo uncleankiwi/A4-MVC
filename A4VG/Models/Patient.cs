@@ -1,8 +1,10 @@
-﻿using System;
+﻿using A4VG.Globals;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace A4VG.Models
 {
@@ -17,6 +19,7 @@ namespace A4VG.Models
 		public int DoctorId { get; set; }
 		public DateTime DOB { get; set; }
 		public Doctor Doctor { get; set; }
+		public SelectList DoctorsList { get; set; }
 
 	}
 }
