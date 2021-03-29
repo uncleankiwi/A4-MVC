@@ -5,82 +5,79 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using A4VG.Globals;
 
 namespace A4VG.Controllers
 {
 	public class PatientController : Controller
 	{
-		
+		Context ctx = new Context();
+
 		public ActionResult Index()
 		{
-			return View(new Context().Patients
+			return View(ctx.Patients
 				.Include(x => x.Doctor));
 		}
 
 		[HttpGet]
 		public ActionResult Create()
 		{
-			return View(LoadDoctorsList(new Patient()));
+			return View(LoadDDLOptions(new Patient()));
 		}
 
 		[HttpPost]
 		public ActionResult Create(Patient patient)
 		{
-			Context context = new Context();
-			context.Patients.Add(patient);
-			context.SaveChanges();
+			ctx.Patients.Add(patient);
+			ctx.SaveChanges();
 			return RedirectToAction("Index");
 		}
 
 		public ActionResult Details(int id)
 		{
-			return ViewFromId(id);
+			return View(PatientFromId(id));
 		}
 
 		[HttpGet]
 		public ActionResult Edit(int id)
 		{
-			return ViewFromId(id);
+			return View(LoadDDLOptions(PatientFromId(id)));
 		}
 
 		[HttpPost]
 		public ActionResult Edit(Patient patient)
 		{
-			Context context = new Context();
-			context.Entry(patient).State = System.Data.Entity.EntityState.Modified;
-			context.SaveChanges();
+			ctx.Entry(patient).State = System.Data.Entity.EntityState.Modified;
+			ctx.SaveChanges();
 			return RedirectToAction("Index");
 		}
 
 		[HttpGet]
 		public ActionResult Delete(int id)
 		{
-			return ViewFromId(id);
+			return View(PatientFromId(id));
 		}
 
 		[HttpPost, ActionName("Delete")]
 		public ActionResult DeleteConfirm(int id)
 		{
-			Context context = new Context();
-			Patient patient = context.Patients.Single(x => x.Id == id);
-			context.Patients.Remove(patient);
-			context.SaveChanges();
+			Patient patient = ctx.Patients.Single(x => x.Id == id);
+			ctx.Patients.Remove(patient);
+			ctx.SaveChanges();
 			return RedirectToAction("Index");
 		}
 
-		public ActionResult ViewFromId(int id)
+		public Patient PatientFromId(int id)
 		{
-			Context context = new Context();
-			Patient patient = context.Patients.Single(x => x.Id == id);
-			return View(patient);
+			Patient patient = ctx.Patients.Single(x => x.Id == id);
+			return patient;
 		}
 
-		public Patient LoadDoctorsList(Patient p)
+		public Patient LoadDDLOptions(Patient p)
 		{
-			SelectList selectList = new SelectList();
-
-			p.DoctorsList = new SelectList(new Context().Doctors.ToList());
+			p.DoctorsList = Consts.GetDoctorsDDL();
 			return p;
 		}
+
 	}
 }

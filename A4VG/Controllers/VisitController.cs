@@ -5,74 +5,79 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using A4VG.Globals;
 
 namespace A4VG.Controllers
 {
-    public class VisitController : Controller
-    {
-        public ActionResult Index()
-        {
-            return View(new Context().Visits
-                .Include(x => x.Doctor)
-                .Include(x => x.Patient));
-        }
+	public class VisitController : Controller
+	{
+		Context ctx = new Context();
 
-        [HttpGet]
-        public ActionResult Create()
+		public ActionResult Index()
 		{
-            return View();
+			return View(ctx.Visits
+				.Include(x => x.Doctor)
+				.Include(x => x.Patient));
 		}
 
-        [HttpPost]
-        public ActionResult Create(Visit visit)
+		[HttpGet]
+		public ActionResult Create()
 		{
-            Context context = new Context();
-            context.Visits.Add(visit);
-            context.SaveChanges();
-            return RedirectToAction("Index");
+			return View(LoadDDLOptions(new Visit()));
 		}
 
-        public ActionResult Details(int id)
+		[HttpPost]
+		public ActionResult Create(Visit visit)
 		{
-            return ViewFromId(id);
+			ctx.Visits.Add(visit);
+			ctx.SaveChanges();
+			return RedirectToAction("Index");
 		}
 
-        [HttpGet]
-        public ActionResult Edit(int id)
+		public ActionResult Details(int id)
 		{
-            return ViewFromId(id);
-        }
-
-        [HttpPost]
-        public ActionResult Edit(Visit visit)
-		{
-            Context context = new Context();
-            context.Entry(visit).State = System.Data.Entity.EntityState.Modified;
-            context.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        [HttpGet]
-        public ActionResult Delete(int id)
-		{
-            return ViewFromId(id);
+			return View(VisitFromId(id));
 		}
 
-        [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirm(int id)
+		[HttpGet]
+		public ActionResult Edit(int id)
 		{
-            Context context = new Context();
-            Visit visit = context.Visits.Single(x => x.Id == id);
-            context.Visits.Remove(visit);
-            context.SaveChanges();
-            return RedirectToAction("Index");
+			return View(LoadDDLOptions(VisitFromId(id)));
 		}
 
-        public ActionResult ViewFromId(int id)
+		[HttpPost]
+		public ActionResult Edit(Visit visit)
 		{
-            Context context = new Context();
-            Visit visit = context.Visits.Single(x => x.Id == id);
-            return View(visit);
+			ctx.Entry(visit).State = System.Data.Entity.EntityState.Modified;
+			ctx.SaveChanges();
+			return RedirectToAction("Index");
 		}
-    }
+
+		[HttpGet]
+		public ActionResult Delete(int id)
+		{
+			return View(VisitFromId(id));
+		}
+
+		[HttpPost, ActionName("Delete")]
+		public ActionResult DeleteConfirm(int id)
+		{
+			Visit visit = ctx.Visits.Single(x => x.Id == id);
+			ctx.Visits.Remove(visit);
+			ctx.SaveChanges();
+			return RedirectToAction("Index");
+		}
+
+		public Visit VisitFromId(int id)
+		{
+			return ctx.Visits.Single(x => x.Id == id);
+		}
+
+		public Visit LoadDDLOptions(Visit v)
+		{
+			v.PatientsList = Consts.GetPatientsDDL();
+			v.DoctorsList = Consts.GetDoctorsDDL();
+			return v;
+		}
+	}
 }

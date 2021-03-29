@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace A4VG.Models
 {
@@ -17,5 +18,7 @@ namespace A4VG.Models
 
 		public Doctor Doctor { get; set; }
 		public Patient Patient { get; set; }
+		public IEnumerable<SelectListItem> PatientsList { get; set; }
+		public IEnumerable<SelectListItem> DoctorsList { get; set; }
 	}
 }

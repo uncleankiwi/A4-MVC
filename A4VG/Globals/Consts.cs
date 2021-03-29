@@ -9,15 +9,24 @@ namespace A4VG.Globals
 {
 	public class Consts
 	{
-		public static List<SelectListItem> GetDoctorsList()
+		public static IEnumerable<SelectListItem> GetDoctorsDDL()
 		{
-			List<SelectListItem> doctorsList = new List<SelectListItem>();
-			List<Doctor> doctors = new Context().Doctors.ToList();
-			foreach (Doctor d in doctors)
+			//.Select() is kind of like .stream()?
+			//ToList() returns a List, Select() returns IEnumerable<whatever>
+			return new Context().Doctors.ToList().Select(x => new SelectListItem
 			{
-				doctorsList.Add(new SelectListItem { Text = d.Name, Value = d.Id.ToString() });
-			}
-			return doctorsList;
+				Value = x.Id.ToString(),
+				Text = x.Id.ToString() + ": " + x.Name
+			});
+		}
+
+		public static IEnumerable<SelectListItem> GetPatientsDDL()
+		{
+			return new Context().Patients.ToList().Select(x => new SelectListItem
+			{
+				Value = x.Id.ToString(),
+				Text = x.Id.ToString() + ": " + x.Name
+			});
 		}
 	}
 }

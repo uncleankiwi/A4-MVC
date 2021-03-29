@@ -19,7 +19,7 @@ namespace A4VG.Models
 		public int DoctorId { get; set; }
 		public DateTime DOB { get; set; }
 		public Doctor Doctor { get; set; }
-		public SelectList DoctorsList { get; set; }
+		public IEnumerable<SelectListItem> DoctorsList { get; set; }
 
 	}
 }
