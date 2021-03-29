@@ -14,14 +14,14 @@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.LabelFor(model => model.DoctorId, "Doctor", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.DoctorId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DropDownListFor(model => model.DoctorId, Model.DoctorsList)
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.PatientId, "Patient", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.PatientId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DropDownListFor(model => model.PatientId, Model.PatientsList)
         </div>
