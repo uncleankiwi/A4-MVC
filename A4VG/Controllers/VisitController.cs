@@ -70,7 +70,10 @@ namespace A4VG.Controllers
 
 		public Visit VisitFromId(int id)
 		{
-			return ctx.Visits.Single(x => x.Id == id);
+			return ctx.Visits
+				.Include(x => x.Patient)
+				.Include(x => x.Doctor)
+				.Single(x => x.Id == id);
 		}
 
 		public Visit LoadDDLOptions(Visit v)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -11,8 +12,11 @@ namespace A4VG.Models
 	public class Visit
 	{
 		public int Id { get; set; }
+		[Display(Name = "Doctor")]
 		public int DoctorId { get; set; }
+		[Display(Name = "Patient")]
 		public int PatientId { get; set; }
+		[Display(Name = "Date and Time")]
 		public DateTime DateAndTime { get; set; }
 		public string Complaint { get; set; }
 

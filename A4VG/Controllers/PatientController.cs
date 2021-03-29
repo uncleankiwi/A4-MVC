@@ -69,7 +69,9 @@ namespace A4VG.Controllers
 
 		public Patient PatientFromId(int id)
 		{
-			Patient patient = ctx.Patients.Single(x => x.Id == id);
+			Patient patient = ctx.Patients
+				.Include(x => x.Doctor)
+				.Single(x => x.Id == id);
 			return patient;
 		}
 
