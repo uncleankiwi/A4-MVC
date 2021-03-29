@@ -28,8 +28,15 @@ namespace A4VG.Controllers
 		[HttpPost]
 		public ActionResult Create(Patient patient)
 		{
-			ctx.Patients.Add(patient);
-			ctx.SaveChanges();
+			try
+			{
+				ctx.Patients.Add(patient);
+				ctx.SaveChanges();
+			}
+			catch (Exception e)
+			{
+				System.Diagnostics.Debug.WriteLine(e.Message);
+			}
 			return RedirectToAction("Index");
 		}
 
@@ -47,8 +54,15 @@ namespace A4VG.Controllers
 		[HttpPost]
 		public ActionResult Edit(Patient patient)
 		{
-			ctx.Entry(patient).State = System.Data.Entity.EntityState.Modified;
-			ctx.SaveChanges();
+			try
+			{
+				ctx.Entry(patient).State = System.Data.Entity.EntityState.Modified;
+				ctx.SaveChanges();
+			}
+			catch (Exception e)
+			{
+				System.Diagnostics.Debug.WriteLine(e.Message);
+			}
 			return RedirectToAction("Index");
 		}
 

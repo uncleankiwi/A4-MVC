@@ -29,8 +29,15 @@ namespace A4VG.Controllers
 		[HttpPost]
 		public ActionResult Create(Visit visit)
 		{
-			ctx.Visits.Add(visit);
-			ctx.SaveChanges();
+			try
+			{
+				ctx.Visits.Add(visit);
+				ctx.SaveChanges();
+			}
+			catch (Exception e)
+			{
+				System.Diagnostics.Debug.WriteLine(e.Message);
+			}
 			return RedirectToAction("Index");
 		}
 
@@ -48,8 +55,16 @@ namespace A4VG.Controllers
 		[HttpPost]
 		public ActionResult Edit(Visit visit)
 		{
-			ctx.Entry(visit).State = System.Data.Entity.EntityState.Modified;
-			ctx.SaveChanges();
+			try
+			{
+				ctx.Entry(visit).State = System.Data.Entity.EntityState.Modified;
+				ctx.SaveChanges();
+			}
+			catch(Exception e)
+			{
+				System.Diagnostics.Debug.WriteLine(e.Message);
+			}
+
 			return RedirectToAction("Index");
 		}
 

@@ -10,6 +10,7 @@ namespace A4VG.Controllers
 {
 	public class DoctorController : Controller
 	{
+		Context ctx = new Context();
 		public ActionResult Index()
 		{
 			return View(new Context().Doctors);
@@ -24,9 +25,15 @@ namespace A4VG.Controllers
 		[HttpPost]
 		public ActionResult Create(Doctor doctor)
 		{
-			Context context = new Context();
-			context.Doctors.Add(doctor);
-			context.SaveChanges();
+			try
+			{
+				ctx.Doctors.Add(doctor);
+				ctx.SaveChanges();
+			}
+			catch (Exception e)
+			{
+				System.Diagnostics.Debug.WriteLine(e.Message);
+			}
 			return RedirectToAction("Index");
 		}
 
@@ -44,9 +51,15 @@ namespace A4VG.Controllers
 		[HttpPost]
 		public ActionResult Edit(Doctor doctor)
 		{
-			Context context = new Context();
-			context.Entry(doctor).State = EntityState.Modified;
-			context.SaveChanges();
+			try
+			{
+				ctx.Entry(doctor).State = EntityState.Modified;
+				ctx.SaveChanges();
+			}
+			catch (Exception e)
+			{
+				System.Diagnostics.Debug.WriteLine(e.Message);
+			}
 			return RedirectToAction("Index");
 		}
 
@@ -59,17 +72,15 @@ namespace A4VG.Controllers
 		[HttpPost, ActionName("Delete")]
 		public ActionResult DeleteConfirm(int id)
 		{
-			Context context = new Context();
-			Doctor doctor = context.Doctors.Single(x => x.Id == id);
-			context.Doctors.Remove(doctor);
-			context.SaveChanges();
+			Doctor doctor = ctx.Doctors.Single(x => x.Id == id);
+			ctx.Doctors.Remove(doctor);
+			ctx.SaveChanges();
 			return RedirectToAction("Index");
 		}
 
 		public ActionResult ViewFromId(int id)
 		{
-			Context context = new Context();
-			Doctor doctor = context.Doctors.Single(x => x.Id == id); //or context.Doctors.Find(id);
+			Doctor doctor = ctx.Doctors.Single(x => x.Id == id); //or context.Doctors.Find(id);
 			return View(doctor);
 		}
 

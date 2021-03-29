@@ -20,7 +20,7 @@ namespace A4VG.Models
 		[Display(Name = "Doctor")]
 		public int DoctorId { get; set; }
 		[DataType(DataType.Date)]
-		[DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}", ApplyFormatInEditMode = true)]
+		[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
 		public DateTime DOB { get; set; }
 		public Doctor Doctor { get; set; }
 		public IEnumerable<SelectListItem> DoctorsList { get; set; }

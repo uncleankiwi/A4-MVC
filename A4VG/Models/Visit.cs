@@ -16,7 +16,8 @@ namespace A4VG.Models
 		public int DoctorId { get; set; }
 		[Display(Name = "Patient")]
 		public int PatientId { get; set; }
-		[Display(Name = "Date and Time")]
+		[Display(Name = "Date and Time"),
+		DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
 		public DateTime DateAndTime { get; set; }
 		public string Complaint { get; set; }
 
