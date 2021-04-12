@@ -1,4 +1,5 @@
-﻿using A4VG.Models;
+﻿using A4VG.Globals;
+using A4VG.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace A4VG.Controllers
 				//if pass is correct, add cookie, redirect to home
 				if (loginMatches.Count == 1)
 				{
-					Session["AdminName"] = admin.AdminName;
+					Session[Consts.ADMIN_NAME] = admin.AdminName;
 					return RedirectToAction("Index", "Home");
 				}
 			}

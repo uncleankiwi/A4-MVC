@@ -9,6 +9,8 @@ namespace A4VG.Globals
 {
 	public class Consts
 	{
+		public const string ADMIN_NAME = "AdminName";
+
 		public static IEnumerable<SelectListItem> GetDoctorsDDL()
 		{
 			//.Select() is kind of like .stream()?
@@ -29,9 +31,17 @@ namespace A4VG.Globals
 			});
 		}
 
-		public static void CheckIfLoggedIn()
+		public static void CheckIfLoggedIn(HttpContext httpContext)
 		{
-
+			if (httpContext.Session[ADMIN_NAME] == null)
+			{
+				httpContext.Response.RedirectToRoute(new
+				{
+					controller = "Login",
+					action = "Do"
+				});
+				
+			}
 		}
 	}
 }
