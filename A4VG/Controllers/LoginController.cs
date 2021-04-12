@@ -29,7 +29,7 @@ namespace A4VG.Controllers
 				if (loginMatches.Count == 1)
 				{
 					System.Diagnostics.Debug.WriteLine("login success"); //TODO
-					RedirectToAction("Index", "Home");
+					return RedirectToAction("Index", "Home");
 				}
 			}
 			//if pass is incorrect, redirect to login, display error message
@@ -37,9 +37,8 @@ namespace A4VG.Controllers
 			{
 				System.Diagnostics.Debug.WriteLine(e.GetBaseException().ToString());
 			}
-
-			System.Diagnostics.Debug.WriteLine("fail route");
 			Admin errorResult = new Admin();
+			ModelState.Clear();
 			errorResult.ErrorMessage = "Username or password incorrect.";
 			return View(errorResult);
 		}
