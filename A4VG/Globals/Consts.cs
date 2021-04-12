@@ -28,5 +28,10 @@ namespace A4VG.Globals
 				Text = x.Id.ToString() + ": " + x.Name
 			});
 		}
+
+		public static void CheckIfLoggedIn()
+		{
+
+		}
 	}
 }

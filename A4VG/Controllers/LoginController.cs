@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace A4VG.Controllers
@@ -28,7 +27,7 @@ namespace A4VG.Controllers
 				//if pass is correct, add cookie, redirect to home
 				if (loginMatches.Count == 1)
 				{
-					System.Diagnostics.Debug.WriteLine("login success"); //TODO
+					Session["AdminName"] = admin.AdminName;
 					return RedirectToAction("Index", "Home");
 				}
 			}
@@ -41,6 +40,15 @@ namespace A4VG.Controllers
 			ModelState.Clear();
 			errorResult.ErrorMessage = "Username or password incorrect.";
 			return View(errorResult);
+		}
+
+		[HttpGet]
+		public ActionResult Logoff()
+		{
+			//invalidate session
+			Session.Abandon();
+			//redirect to login page
+			return RedirectToAction("Do", "Login");
 		}
 	}
 }
