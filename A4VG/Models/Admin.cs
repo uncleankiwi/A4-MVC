@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.ModelBinding;
+using System.Web.Mvc;
 
 namespace A4VG.Models
 {
@@ -15,6 +17,7 @@ namespace A4VG.Models
 		public String AdminName { get; set; }
 		[Display(Name = "Password")]
 		public String AdminPass { get; set; }
+		[NotMapped]
 		public String ErrorMessage { get; set; }
 	}
 }
