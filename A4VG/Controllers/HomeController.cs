@@ -1,4 +1,5 @@
-﻿using System;
+﻿using A4VG.Globals;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,8 @@ namespace A4VG.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
+
             return View();
         }
     }

@@ -1,0 +1,11 @@
+﻿<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Home")">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Doctor")">Doctors</a></li>
+            <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Patient")">Patients</a></li>
+            <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Visit")">Visits</a></li>
+        </ul>
+        @Html.Partial("_LogoutButton")
+    </div>
+</nav>

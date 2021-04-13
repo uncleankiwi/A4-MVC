@@ -24,6 +24,5 @@ namespace A4VG.Models
 		public DateTime DOB { get; set; }
 		public Doctor Doctor { get; set; }
 		public IEnumerable<SelectListItem> DoctorsList { get; set; }
-
 	}
 }

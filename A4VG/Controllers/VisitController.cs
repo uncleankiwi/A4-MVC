@@ -15,6 +15,8 @@ namespace A4VG.Controllers
 
 		public ActionResult Index()
 		{
+			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
+
 			return View(ctx.Visits
 				.Include(x => x.Doctor)
 				.Include(x => x.Patient));
@@ -23,12 +25,16 @@ namespace A4VG.Controllers
 		[HttpGet]
 		public ActionResult Create()
 		{
+			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
+
 			return View(LoadDDLOptions(new Visit()));
 		}
 
 		[HttpPost]
 		public ActionResult Create(Visit visit)
 		{
+			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
+
 			try
 			{
 				ctx.Visits.Add(visit);
@@ -43,18 +49,24 @@ namespace A4VG.Controllers
 
 		public ActionResult Details(int id)
 		{
+			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
+
 			return View(VisitFromId(id));
 		}
 
 		[HttpGet]
 		public ActionResult Edit(int id)
 		{
+			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
+
 			return View(LoadDDLOptions(VisitFromId(id)));
 		}
 
 		[HttpPost]
 		public ActionResult Edit(Visit visit)
 		{
+			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
+
 			try
 			{
 				ctx.Entry(visit).State = System.Data.Entity.EntityState.Modified;
@@ -71,19 +83,23 @@ namespace A4VG.Controllers
 		[HttpGet]
 		public ActionResult Delete(int id)
 		{
+			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
+
 			return View(VisitFromId(id));
 		}
 
 		[HttpPost, ActionName("Delete")]
 		public ActionResult DeleteConfirm(int id)
 		{
+			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
+
 			Visit visit = ctx.Visits.Single(x => x.Id == id);
 			ctx.Visits.Remove(visit);
 			ctx.SaveChanges();
 			return RedirectToAction("Index");
 		}
 
-		public Visit VisitFromId(int id)
+		private Visit VisitFromId(int id)
 		{
 			return ctx.Visits
 				.Include(x => x.Patient)
@@ -91,7 +107,7 @@ namespace A4VG.Controllers
 				.Single(x => x.Id == id);
 		}
 
-		public Visit LoadDDLOptions(Visit v)
+		private Visit LoadDDLOptions(Visit v)
 		{
 			v.PatientsList = Consts.GetPatientsDDL();
 			v.DoctorsList = Consts.GetDoctorsDDL();

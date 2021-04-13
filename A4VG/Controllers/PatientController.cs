@@ -15,6 +15,8 @@ namespace A4VG.Controllers
 
 		public ActionResult Index()
 		{
+			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
+
 			return View(ctx.Patients
 				.Include(x => x.Doctor));
 		}
@@ -22,12 +24,16 @@ namespace A4VG.Controllers
 		[HttpGet]
 		public ActionResult Create()
 		{
+			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
+
 			return View(LoadDDLOptions(new Patient()));
 		}
 
 		[HttpPost]
 		public ActionResult Create(Patient patient)
 		{
+			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
+
 			try
 			{
 				ctx.Patients.Add(patient);
@@ -42,18 +48,24 @@ namespace A4VG.Controllers
 
 		public ActionResult Details(int id)
 		{
+			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
+
 			return View(PatientFromId(id));
 		}
 
 		[HttpGet]
 		public ActionResult Edit(int id)
 		{
+			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
+
 			return View(LoadDDLOptions(PatientFromId(id)));
 		}
 
 		[HttpPost]
 		public ActionResult Edit(Patient patient)
 		{
+			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
+
 			try
 			{
 				ctx.Entry(patient).State = System.Data.Entity.EntityState.Modified;
@@ -69,12 +81,16 @@ namespace A4VG.Controllers
 		[HttpGet]
 		public ActionResult Delete(int id)
 		{
+			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
+
 			return View(PatientFromId(id));
 		}
 
 		[HttpPost, ActionName("Delete")]
 		public ActionResult DeleteConfirm(int id)
 		{
+			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
+
 			Patient patient = ctx.Patients.Single(x => x.Id == id);
 			ctx.Patients.Remove(patient);
 			ctx.SaveChanges();

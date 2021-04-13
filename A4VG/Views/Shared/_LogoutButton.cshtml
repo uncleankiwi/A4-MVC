@@ -1,0 +1,12 @@
+﻿@using A4VG.Globals
+
+<span class="navbar-text" style="margin-right: 10px;">
+    @if (Session[Consts.ADMIN_NAME] != null)
+    {
+        <text>Logged in as </text>@Session[Consts.ADMIN_NAME].ToString();
+    }
+
+</span>
+<form class="form-inline my-2 my-lg-0">
+	<a href="@Url.Action("Logoff", "Login")" class="btn btn-outline-success my-2 my-sm-0" role="button" aria-pressed="true">Log out</a>
+</form>
