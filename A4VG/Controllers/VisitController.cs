@@ -59,7 +59,7 @@ namespace A4VG.Controllers
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
 
-			return View(LoadDDLOptions(VisitFromId(id)));
+			return View(LoadMainDoctorDDLOptions(VisitFromId(id)));
 		}
 
 		[HttpPost]
@@ -117,7 +117,7 @@ namespace A4VG.Controllers
 		private Visit LoadMainDoctorDDLOptions(Visit v)
 		{
 			v.PatientsList = Consts.GetPatientsDDL();
-			v.DoctorsList = Consts.GetDoctorsDDL();
+			v.DoctorsList = Consts.GetDoctorsDDLWithMainDoctor(v.Patient);
 			return v;
 		}
 	}
