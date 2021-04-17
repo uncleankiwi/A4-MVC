@@ -26,7 +26,9 @@ namespace A4VG.Controllers
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
 
-			return View(LoadDDLOptions(new Patient()));
+			Patient patient = new Patient();
+			patient.DOB = DateTime.Now;
+			return View(LoadDDLOptions(patient));
 		}
 
 		[HttpPost]
@@ -41,7 +43,7 @@ namespace A4VG.Controllers
 			}
 			catch (Exception e)
 			{
-				System.Diagnostics.Debug.WriteLine(e.Message);
+				System.Diagnostics.Debug.WriteLine("Error creating a patient: " + e.GetBaseException().ToString());
 			}
 			return RedirectToAction("Index");
 		}
@@ -73,7 +75,7 @@ namespace A4VG.Controllers
 			}
 			catch (Exception e)
 			{
-				System.Diagnostics.Debug.WriteLine(e.Message);
+				System.Diagnostics.Debug.WriteLine("Error editing a patient: " + e.GetBaseException().ToString());
 			}
 			return RedirectToAction("Index");
 		}
@@ -90,11 +92,19 @@ namespace A4VG.Controllers
 		public ActionResult DeleteConfirm(int id)
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
-
-			Patient patient = ctx.Patients.Single(x => x.Id == id);
-			ctx.Patients.Remove(patient);
-			ctx.SaveChanges();
+			try
+			{
+				Patient patient = ctx.Patients.Single(x => x.Id == id);
+				ctx.Patients.Remove(patient);
+				ctx.SaveChanges();
+				return RedirectToAction("Index");
+			}
+			catch (Exception e)
+			{
+				System.Diagnostics.Debug.WriteLine("Error deleting a patient: " + e.GetBaseException().ToString());
+			}
 			return RedirectToAction("Index");
+
 		}
 
 		public Patient PatientFromId(int id)

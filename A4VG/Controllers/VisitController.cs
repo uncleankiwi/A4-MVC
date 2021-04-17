@@ -27,7 +27,9 @@ namespace A4VG.Controllers
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
 
-			return View(LoadDDLOptions(new Visit()));
+			Visit visit = new Visit();
+			visit.DateAndTime = DateTime.Now;
+			return View(LoadDDLOptions(visit));
 		}
 
 		[HttpPost]
@@ -42,7 +44,7 @@ namespace A4VG.Controllers
 			}
 			catch (Exception e)
 			{
-				System.Diagnostics.Debug.WriteLine(e.Message);
+				System.Diagnostics.Debug.WriteLine("Error creating a visit: " + e.GetBaseException().ToString());
 			}
 			return RedirectToAction("Index");
 		}
@@ -74,7 +76,7 @@ namespace A4VG.Controllers
 			}
 			catch(Exception e)
 			{
-				System.Diagnostics.Debug.WriteLine(e.Message);
+				System.Diagnostics.Debug.WriteLine("Error editing a visit: " + e.GetBaseException().ToString());
 			}
 
 			return RedirectToAction("Index");
@@ -92,10 +94,18 @@ namespace A4VG.Controllers
 		public ActionResult DeleteConfirm(int id)
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
-
+			try
+			{
+				
 			Visit visit = ctx.Visits.Single(x => x.Id == id);
 			ctx.Visits.Remove(visit);
 			ctx.SaveChanges();
+			return RedirectToAction("Index");
+			}
+			catch (Exception e)
+			{
+				System.Diagnostics.Debug.WriteLine("Error deleting a visit: " + e.GetBaseException().ToString());
+			}
 			return RedirectToAction("Index");
 		}
 
