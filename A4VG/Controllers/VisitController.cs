@@ -113,5 +113,12 @@ namespace A4VG.Controllers
 			v.DoctorsList = Consts.GetDoctorsDDL();
 			return v;
 		}
+
+		private Visit LoadMainDoctorDDLOptions(Visit v)
+		{
+			v.PatientsList = Consts.GetPatientsDDL();
+			v.DoctorsList = Consts.GetDoctorsDDL();
+			return v;
+		}
 	}
 }
