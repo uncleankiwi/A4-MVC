@@ -31,6 +31,7 @@ namespace A4VG.Controllers
 			{
 				DateAndTime = DateTime.Now
 			};
+			visit.InitDateTime();
 			return View(LoadDDLOptions(visit));
 		}
 
@@ -41,6 +42,7 @@ namespace A4VG.Controllers
 
 			try
 			{
+				visit.ParseDateTime();
 				ctx.Visits.Add(visit);
 				ctx.SaveChanges();
 			}
@@ -62,8 +64,9 @@ namespace A4VG.Controllers
 		public ActionResult Edit(int id)
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
-
-			return View(LoadMainDoctorDDLOptions(VisitFromId(id)));
+			Visit visit = LoadMainDoctorDDLOptions(VisitFromId(id));
+			visit.InitDateTime();
+			return View(visit);
 		}
 
 		[HttpPost]
@@ -73,6 +76,7 @@ namespace A4VG.Controllers
 
 			try
 			{
+				visit.ParseDateTime();
 				ctx.Entry(visit).State = System.Data.Entity.EntityState.Modified;
 				ctx.SaveChanges();
 			}

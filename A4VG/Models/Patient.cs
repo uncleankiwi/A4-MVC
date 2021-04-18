@@ -19,8 +19,8 @@ namespace A4VG.Models
 		public string Address { get; set; }
 		[Display(Name = "Doctor")]
 		public int DoctorId { get; set; }
-		[DataType(DataType.Date),
-			DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+		[DataType(DataType.Date)]
+		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
 		public DateTime DOB { get; set; }
 		public Doctor Doctor { get; set; }
 		public IEnumerable<SelectListItem> DoctorsList { get; set; }
