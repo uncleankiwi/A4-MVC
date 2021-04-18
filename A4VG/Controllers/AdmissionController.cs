@@ -13,32 +13,36 @@ namespace A4VG.Controllers
 		readonly Context ctx = new Context();
 
 		// GET: Admission
-		public ActionResult Index()
+		public PartialViewResult Index(int patientId)
 		{
-			return View();
+			List<Admission> admissions = ctx.Admissions.Where(x => x.PatientId == patientId).ToList();
+			return PartialView("~/Views/Admission/_Index.cshtml", admissions);
 		}
 
 		// GET: Admission/Details/5
-		public ActionResult Details(int id)
+		public PartialViewResult Details(int id)
 		{
-			return View(AdmissionFromId(id));
+			return PartialView(AdmissionFromId(id));
 		}
 
 		// GET: Admission/Create
-		public ActionResult Create()
+		public PartialViewResult Create()
 		{
-			Admission admission = new Admission();
-			admission.Admitted = DateTime.Now;
+			Admission admission = new Admission
+			{
+				Admitted = DateTime.Now
+			};
 			admission.InitDateTime();
-			return View(admission);
+			return PartialView(admission);
 		}
 
 		// POST: Admission/Create
 		[HttpPost]
-		public ActionResult Create(Admission admission)
+		public PartialViewResult Create(Admission admission, int patientId)
 		{
 			try
 			{
+				admission.PatientId = patientId;
 				admission.ParseDateTime();
 				ctx.Admissions.Add(admission);
 				ctx.SaveChanges();
@@ -48,11 +52,11 @@ namespace A4VG.Controllers
 			{
 				System.Diagnostics.Debug.WriteLine("Error creating an admission: " + e.GetBaseException().ToString());
 			}
-			return RedirectToAction("Index");
+			return PartialView("~/Views/Admission/_Index.cshtml", admissions);
 		}
 
 		// GET: Admission/Edit/5
-		public ActionResult Edit(int id)
+		public PartialViewResult Edit(int id)
 		{
 			Admission admission = AdmissionFromId(id);
 			admission.InitDateTime();
@@ -61,10 +65,11 @@ namespace A4VG.Controllers
 
 		// POST: Admission/Edit/5
 		[HttpPost]
-		public ActionResult Edit(Admission admission)
+		public PartialViewResult Edit(Admission admission, int patientId)
 		{
 			try
 			{
+				admission.PatientId = patientId;
 				admission.ParseDateTime();
 				ctx.Entry(admission).State = EntityState.Modified;
 				ctx.SaveChanges();
@@ -77,14 +82,14 @@ namespace A4VG.Controllers
 		}
 
 		// GET: Admission/Delete/5
-		public ActionResult Delete(int id)
+		public PartialViewResult Delete(int id)
 		{
 			return View(AdmissionFromId(id));
 		}
 
 		// POST: Admission/Delete/5
 		[HttpPost, ActionName("Delete")]
-		public ActionResult DeleteConfirm(int id)
+		public PartialViewResult DeleteConfirm(int id)
 		{
 			try
 			{
@@ -105,7 +110,6 @@ namespace A4VG.Controllers
 		private Admission AdmissionFromId(int id)
 		{
 			return ctx.Admissions
-				.Include(x => x.Patient)
 				.Single(x => x.Id == id);
 		}
 	}

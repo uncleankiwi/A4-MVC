@@ -1,65 +1,72 @@
 ﻿@model A4VG.Models.Patient
 
 @{
-    ViewBag.Title = "Patient Details";
+	ViewBag.Title = "Patient Details";
 }
 
 
 <div>
-    <h4>Patient</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+	<h4>Patient</h4>
+	<hr />
+	<dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.Name)
+		</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+		<dd>
+			@Html.DisplayFor(model => model.Name)
+		</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+		<dt>
+			@Html.DisplayNameFor(model => model.Email)
+		</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+		<dd>
+			@Html.DisplayFor(model => model.Email)
+		</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Telephone)
-        </dt>
+		<dt>
+			@Html.DisplayNameFor(model => model.Telephone)
+		</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Telephone)
-        </dd>
+		<dd>
+			@Html.DisplayFor(model => model.Telephone)
+		</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
+		<dt>
+			@Html.DisplayNameFor(model => model.Address)
+		</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
+		<dd>
+			@Html.DisplayFor(model => model.Address)
+		</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Doctor)
-        </dt>
+		<dt>
+			@Html.DisplayNameFor(model => model.Doctor)
+		</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Doctor.Name)
-        </dd>
+		<dd>
+			@Html.DisplayFor(model => model.Doctor.Name)
+		</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DOB)
-        </dt>
+		<dt>
+			@Html.DisplayNameFor(model => model.DOB)
+		</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DOB)
-        </dd>
+		<dd>
+			@Html.DisplayFor(model => model.DOB)
+		</dd>
 
-    </dl>
+	</dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+	@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+	@Html.ActionLink("Back to List", "Index")
 </p>
+
+<script src="~/Scripts/jquery-3.0.0.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<div id="divLoading" style="display:none">
+	<img src="~/Images/loading.gif" />
+</div>
