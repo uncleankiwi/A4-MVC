@@ -25,6 +25,7 @@ namespace A4VG.Models
 		public string Unit { get; set; }
 		public string Room { get; set; }
 		public string Bed { get; set; }
+		public Patient Patient { get; set; }
 
 		[NotMapped]
 		[DataType(DataType.Date)]
