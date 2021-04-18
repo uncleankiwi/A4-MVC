@@ -223,6 +223,7 @@
     </Compile>
     <Compile Include="Globals\Consts.cs" />
     <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\Admission.cs" />
     <Compile Include="Models\Context.cs" />
     <Compile Include="Models\Doctor.cs" />
     <Compile Include="Models\Patient.cs" />
