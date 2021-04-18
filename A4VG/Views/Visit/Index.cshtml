@@ -33,7 +33,8 @@
 		@Html.ActionLink(item.Patient.Name, "Details", "Patient", new { id = item.PatientId }, null)
 	</td>
 	<td>
-		@Html.ActionLink(item.Doctor.Name, "Details", "Doctor", new { id = item.DoctorId }, null)
+		@Html.ActionLink(item.Doctor.Name + (item.DoctorId == item.Patient.DoctorId ? " (main)" : ""), 
+			"Details", "Doctor", new { id = item.DoctorId }, null)
 	</td>
 	<td>
 		@Html.DisplayFor(modelItem => item.Complaint)

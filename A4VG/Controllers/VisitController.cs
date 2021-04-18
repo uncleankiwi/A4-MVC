@@ -11,7 +11,7 @@ namespace A4VG.Controllers
 {
 	public class VisitController : Controller
 	{
-		Context ctx = new Context();
+		readonly Context ctx = new Context();
 
 		public ActionResult Index()
 		{
@@ -27,7 +27,12 @@ namespace A4VG.Controllers
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
 
-			return View(LoadDDLOptions(new Visit()));
+			Visit visit = new Visit
+			{
+				DateAndTime = DateTime.Now
+			};
+			visit.InitDateTime();
+			return View(LoadDDLOptions(visit));
 		}
 
 		[HttpPost]
@@ -37,12 +42,13 @@ namespace A4VG.Controllers
 
 			try
 			{
+				visit.ParseDateTime();
 				ctx.Visits.Add(visit);
 				ctx.SaveChanges();
 			}
 			catch (Exception e)
 			{
-				System.Diagnostics.Debug.WriteLine(e.Message);
+				System.Diagnostics.Debug.WriteLine("Error creating a visit: " + e.GetBaseException().ToString());
 			}
 			return RedirectToAction("Index");
 		}
@@ -58,8 +64,9 @@ namespace A4VG.Controllers
 		public ActionResult Edit(int id)
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
-
-			return View(LoadDDLOptions(VisitFromId(id)));
+			Visit visit = LoadMainDoctorDDLOptions(VisitFromId(id));
+			visit.InitDateTime();
+			return View(visit);
 		}
 
 		[HttpPost]
@@ -69,12 +76,13 @@ namespace A4VG.Controllers
 
 			try
 			{
+				visit.ParseDateTime();
 				ctx.Entry(visit).State = System.Data.Entity.EntityState.Modified;
 				ctx.SaveChanges();
 			}
 			catch(Exception e)
 			{
-				System.Diagnostics.Debug.WriteLine(e.Message);
+				System.Diagnostics.Debug.WriteLine("Error editing a visit: " + e.GetBaseException().ToString());
 			}
 
 			return RedirectToAction("Index");
@@ -92,10 +100,18 @@ namespace A4VG.Controllers
 		public ActionResult DeleteConfirm(int id)
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
-
+			try
+			{
+				
 			Visit visit = ctx.Visits.Single(x => x.Id == id);
 			ctx.Visits.Remove(visit);
 			ctx.SaveChanges();
+			return RedirectToAction("Index");
+			}
+			catch (Exception e)
+			{
+				System.Diagnostics.Debug.WriteLine("Error deleting a visit: " + e.GetBaseException().ToString());
+			}
 			return RedirectToAction("Index");
 		}
 
@@ -111,6 +127,13 @@ namespace A4VG.Controllers
 		{
 			v.PatientsList = Consts.GetPatientsDDL();
 			v.DoctorsList = Consts.GetDoctorsDDL();
+			return v;
+		}
+
+		private Visit LoadMainDoctorDDLOptions(Visit v)
+		{
+			v.PatientsList = Consts.GetPatientsDDL();
+			v.DoctorsList = Consts.GetDoctorsDDLWithMainDoctor(v.Patient);
 			return v;
 		}
 	}

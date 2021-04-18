@@ -31,6 +31,15 @@ namespace A4VG.Globals
 			});
 		}
 
+		public static IEnumerable<SelectListItem> GetDoctorsDDLWithMainDoctor(Patient patient)
+		{
+			return new Context().Doctors.ToList().Select(x => new SelectListItem
+			{
+				Value = x.Id.ToString(),
+				Text = x.Id.ToString() + ": " + x.Name + (patient.DoctorId == x.Id ? " (main)" : "")
+			});
+		}
+
 		public static void CheckIfLoggedIn(HttpContext httpContext)
 		{
 			if (httpContext.Session[ADMIN_NAME] == null)
@@ -40,8 +49,8 @@ namespace A4VG.Globals
 					controller = "Login",
 					action = "Do"
 				});
-				
+
 			}
 		}
 	}
-}
+} 

@@ -9,7 +9,7 @@ namespace A4VG.Controllers
 {
 	public class LoginController : Controller
 	{
-		Context ctx = new Context();
+		readonly Context ctx = new Context();
 
 		[HttpGet]
 		public ActionResult Do()

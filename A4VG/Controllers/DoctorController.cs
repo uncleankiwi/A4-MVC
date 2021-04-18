@@ -11,7 +11,7 @@ namespace A4VG.Controllers
 {
 	public class DoctorController : Controller
 	{
-		Context ctx = new Context();
+		readonly Context ctx = new Context();
 		public ActionResult Index()
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
@@ -39,7 +39,7 @@ namespace A4VG.Controllers
 			}
 			catch (Exception e)
 			{
-				System.Diagnostics.Debug.WriteLine(e.Message);
+				System.Diagnostics.Debug.WriteLine("Error creating a doctor: " + e.GetBaseException().ToString());
 			}
 			return RedirectToAction("Index");
 		}
@@ -71,7 +71,7 @@ namespace A4VG.Controllers
 			}
 			catch (Exception e)
 			{
-				System.Diagnostics.Debug.WriteLine(e.Message);
+				System.Diagnostics.Debug.WriteLine("Error editing a doctor: " + e.GetBaseException().ToString());
 			}
 			return RedirectToAction("Index");
 		}
@@ -88,10 +88,18 @@ namespace A4VG.Controllers
 		public ActionResult DeleteConfirm(int id)
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
-
-			Doctor doctor = ctx.Doctors.Single(x => x.Id == id);
-			ctx.Doctors.Remove(doctor);
-			ctx.SaveChanges();
+			try
+			{
+				Doctor doctor = ctx.Doctors.Single(x => x.Id == id);
+				ctx.Doctors.Remove(doctor);
+				ctx.SaveChanges();
+				return RedirectToAction("Index");
+			}
+			catch (Exception e)
+			{
+				//System.Data.SqlClient.SqlException: trying to delete a doctor referenced in a patient/visit
+				System.Diagnostics.Debug.WriteLine("Error deleting a doctor: " + e.GetBaseException().ToString());
+			}
 			return RedirectToAction("Index");
 		}
 

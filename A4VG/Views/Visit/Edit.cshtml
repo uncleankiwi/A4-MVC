@@ -1,59 +1,60 @@
 ﻿@model A4VG.Models.Visit
 
 @{
-    ViewBag.Title = "Edit Visit";
+	ViewBag.Title = "Edit Visit";
 }
 
 @using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
-    
+	@Html.AntiForgeryToken()
+
 <div class="form-horizontal">
-    <h4>Visit</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.Id)
+	<h4>Visit</h4>
+	<hr />
+	@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+	@Html.HiddenFor(model => model.Id)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.DoctorId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.DoctorId, Model.DoctorsList)
-        </div>
-    </div>
+	<div class="form-group">
+		@Html.LabelFor(model => model.DoctorId, htmlAttributes: new { @class = "control-label col-md-2" })
+		<div class="col-md-10">
+			@Html.DropDownListFor(model => model.DoctorId, Model.DoctorsList)
+		</div>
+	</div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.PatientId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.PatientId, Model.PatientsList)
-        </div>
-    </div>
+	<div class="form-group">
+		@Html.LabelFor(model => model.PatientId, htmlAttributes: new { @class = "control-label col-md-2" })
+		<div class="col-md-10">
+			@Html.DropDownListFor(model => model.PatientId, Model.PatientsList)
+		</div>
+	</div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.DateAndTime, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.DateAndTime, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DateAndTime, "", new { @class = "text-danger" })
-        </div>
-    </div>
+	<div class="form-group">
+		@Html.LabelFor(model => model.DateAndTime, htmlAttributes: new { @class = "control-label col-md-2" })
+		<div class="col-md-10">
+			@Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.EditorFor(model => model.Time, new { htmlAttributes = new { @class = "form-control" } })
+		</div>
+	</div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Complaint, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Complaint, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Complaint, "", new { @class = "text-danger" })
-        </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
-        </div>
-    </div>
+	<div class="form-group">
+		@Html.LabelFor(model => model.Complaint, htmlAttributes: new { @class = "control-label col-md-2" })
+		<div class="col-md-10">
+			@Html.EditorFor(model => model.Complaint, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(model => model.Complaint, "", new { @class = "text-danger" })
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-10">
+			<input type="submit" value="Save" class="btn btn-default" />
+		</div>
+	</div>
 </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+	@Html.ActionLink("Back to List", "Index")
 </div>
 
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
