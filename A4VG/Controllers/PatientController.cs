@@ -11,7 +11,7 @@ namespace A4VG.Controllers
 {
 	public class PatientController : Controller
 	{
-		Context ctx = new Context();
+		readonly Context ctx = new Context();
 
 		public ActionResult Index()
 		{
@@ -26,8 +26,10 @@ namespace A4VG.Controllers
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
 
-			Patient patient = new Patient();
-			patient.DOB = DateTime.Now;
+			Patient patient = new Patient
+			{
+				DOB = DateTime.Now
+			};
 			return View(LoadDDLOptions(patient));
 		}
 

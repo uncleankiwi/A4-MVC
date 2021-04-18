@@ -11,7 +11,7 @@ namespace A4VG.Controllers
 {
 	public class VisitController : Controller
 	{
-		Context ctx = new Context();
+		readonly Context ctx = new Context();
 
 		public ActionResult Index()
 		{
@@ -27,8 +27,10 @@ namespace A4VG.Controllers
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
 
-			Visit visit = new Visit();
-			visit.DateAndTime = DateTime.Now;
+			Visit visit = new Visit
+			{
+				DateAndTime = DateTime.Now
+			};
 			return View(LoadDDLOptions(visit));
 		}
 
