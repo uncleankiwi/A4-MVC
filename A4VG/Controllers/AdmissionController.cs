@@ -52,7 +52,7 @@ namespace A4VG.Controllers
 			{
 				System.Diagnostics.Debug.WriteLine("Error creating an admission: " + e.GetBaseException().ToString());
 			}
-			return PartialView("~/Views/Admission/_Index.cshtml", admissions);
+			return Index(patientId);
 		}
 
 		// GET: Admission/Edit/5
@@ -60,7 +60,7 @@ namespace A4VG.Controllers
 		{
 			Admission admission = AdmissionFromId(id);
 			admission.InitDateTime();
-			return View(admission);
+			return PartialView(admission);
 		}
 
 		// POST: Admission/Edit/5
@@ -78,31 +78,31 @@ namespace A4VG.Controllers
 			{
 				System.Diagnostics.Debug.WriteLine("Error editing an admission: " + e.GetBaseException().ToString());
 			}
-			return RedirectToAction("Index");
+			return Index(patientId);
 		}
 
 		// GET: Admission/Delete/5
 		public PartialViewResult Delete(int id)
 		{
-			return View(AdmissionFromId(id));
+			return PartialView("", AdmissionFromId(id));
 		}
 
 		// POST: Admission/Delete/5
 		[HttpPost, ActionName("Delete")]
-		public PartialViewResult DeleteConfirm(int id)
+		public PartialViewResult DeleteConfirm(int id, int patientId)
 		{
 			try
 			{
 				Admission admission = ctx.Admissions.Single(x => x.Id == id);
 				ctx.Admissions.Remove(admission);
 				ctx.SaveChanges();
-				return RedirectToAction("Index");
+				return Index(patientId);
 			}
 			catch (Exception e)
 			{
 				System.Diagnostics.Debug.WriteLine("Error deleting an admission: " + e.GetBaseException().ToString());
 			}
-			return RedirectToAction("Index");
+			return Index(patientId);
 		}
 
 		// ============ utility methods ============ 
