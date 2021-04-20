@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using A4VG.Globals;
 
 namespace A4VG.Controllers
 {
@@ -15,7 +16,7 @@ namespace A4VG.Controllers
 		// GET: Admission
 		public PartialViewResult Index(Patient patient)
 		{
-			List<Admission> admissions = ctx.Admissions.Where(x => x.PatientId == patient.Id).ToList();
+			patient = Consts.LoadAdmissionsList(patient);
 			return PartialView("~/Views/Admission/_Index.cshtml", patient);
 		}
 

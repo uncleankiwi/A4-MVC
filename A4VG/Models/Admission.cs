@@ -7,6 +7,7 @@ using System.Web;
 
 namespace A4VG.Models
 {
+	[Table("tblAdmissions")]
 	public class Admission
 	{
 		public int Id { get; set; }
@@ -15,12 +16,12 @@ namespace A4VG.Models
 		[Display(Name = "Admission Date and Time"),
 		DataType(DataType.DateTime),
 		DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
-		public DateTime Admitted { get; set; }
+		public DateTime? Admitted { get; set; }
 
 		[Display(Name = "Admission Date and Time"),
 		DataType(DataType.DateTime),
 		DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
-		public DateTime Discharged { get; set; }
+		public DateTime? Discharged { get; set; }
 
 		public string Unit { get; set; }
 		public string Room { get; set; }
@@ -56,13 +57,13 @@ namespace A4VG.Models
 		{
 			if (this.Admitted != null)
 			{
-				this.AdmittedDate = this.Admitted;
-				this.AdmittedTime = this.Admitted;
+				this.AdmittedDate = (DateTime)this.Admitted;
+				this.AdmittedTime = (DateTime)this.Admitted;
 			}
 			if (this.Discharged != null)
 			{
-				this.DischargedDate = this.Discharged;
-				this.DischargedTime = this.Discharged;
+				this.DischargedDate = (DateTime)this.Discharged;
+				this.DischargedTime = (DateTime)this.Discharged;
 			}
 		}
 
