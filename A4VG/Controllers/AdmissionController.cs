@@ -7,6 +7,13 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using A4VG.Globals;
 
+//patient details	admissions> index
+//index				----pid---> create
+//					----aid---> details
+//					----aid---> edit
+//					----aid---> delete
+
+
 namespace A4VG.Controllers
 {
 	public class AdmissionController : Controller
@@ -14,17 +21,19 @@ namespace A4VG.Controllers
 		readonly Context ctx = new Context();
 
 		// GET: Admission
-		public PartialViewResult Index(Patient patient)
+		public PartialViewResult Index(int patientId)
 		{
+			Patient patient = Consts.PatientFromId(patientId);
 			patient = Consts.LoadAdmissionsList(patient);
 			return PartialView("~/Views/Admission/_Index.cshtml", patient);
 		}
 
 		// GET: Admission/Details/5
-		public PartialViewResult Details(Patient p)	//int id
+		public PartialViewResult Details(int admissionId)
 		{
-			p.AdmissionLookup = AdmissionFromId(p.AdmissionLookupId);
-			return PartialView(p);
+			Admission admission = AdmissionFromId(admissionId);
+			System.Diagnostics.Debug.WriteLine("details clicked " + admission.ToString());
+			return PartialView("~/Views/Admission/_Details.cshtml", AdmissionFromId(admissionId));
 		}
 
 		//// GET: Admission/Create

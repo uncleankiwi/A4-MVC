@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace A4VG.Globals
 {
@@ -69,6 +70,14 @@ namespace A4VG.Globals
 				System.Diagnostics.Debug.WriteLine("Error loading admissions list: " + e.GetBaseException().ToString());
 				return null;
 			}
+		}
+
+		public static Patient PatientFromId(int id)
+		{
+			Patient patient = ctx.Patients
+				.Include(x => x.Doctor)
+				.Single(x => x.Id == id);
+			return patient;
 		}
 	}
 } 

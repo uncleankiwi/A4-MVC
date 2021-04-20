@@ -1,55 +1,55 @@
-﻿@model A4VG.Models.Patient
+﻿@model A4VG.Models.Admission
 
 <div>
 	<h4>Admission</h4>
 	<hr />
 	<dl class="dl-horizontal">
 		<dt>
-			@Html.DisplayNameFor(model => model.AdmissionLookup.PatientId)
+			@Html.DisplayNameFor(model => model.PatientId)
 		</dt>
 
 		<dd>
-			@Html.DisplayFor(model => model.AdmissionLookup.PatientId)
+			@Html.DisplayFor(model => model.PatientId)
 		</dd>
 
 		<dt>
-			@Html.DisplayNameFor(model => model.AdmissionLookup.Admitted)
+			@Html.DisplayNameFor(model => model.Admitted)
 		</dt>
 
 		<dd>
-			@Html.DisplayFor(model => model.AdmissionLookup.Admitted)
+			@Html.DisplayFor(model => model.Admitted)
 		</dd>
 
 		<dt>
-			@Html.DisplayNameFor(model => model.AdmissionLookup.Discharged)
+			@Html.DisplayNameFor(model => model.Discharged)
 		</dt>
 
 		<dd>
-			@Html.DisplayFor(model => model.AdmissionLookup.Discharged)
+			@Html.DisplayFor(model => model.Discharged)
 		</dd>
 
 		<dt>
-			@Html.DisplayNameFor(model => model.AdmissionLookup.Unit)
+			@Html.DisplayNameFor(model => model.Unit)
 		</dt>
 
 		<dd>
-			@Html.DisplayFor(model => model.AdmissionLookup.Unit)
+			@Html.DisplayFor(model => model.Unit)
 		</dd>
 
 		<dt>
-			@Html.DisplayNameFor(model => model.AdmissionLookup.Room)
+			@Html.DisplayNameFor(model => model.Room)
 		</dt>
 
 		<dd>
-			@Html.DisplayFor(model => model.AdmissionLookup.Room)
+			@Html.DisplayFor(model => model.Room)
 		</dd>
 
 		<dt>
-			@Html.DisplayNameFor(model => model.AdmissionLookup.Bed)
+			@Html.DisplayNameFor(model => model.Bed)
 		</dt>
 
 		<dd>
-			@Html.DisplayFor(model => model.AdmissionLookup.Bed)
+			@Html.DisplayFor(model => model.Bed)
 		</dd>
 
 	</dl>
@@ -59,10 +59,10 @@
 	@*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
 	@*@Html.ActionLink("Back to List", "Index")*@
 	@Html.ActionLink("Back to List", "Index")
-	@Ajax.ActionLink("Back to List", "Index", "Admission", new AjaxOptions
-	{
-		HttpMethod = "GET",
-		UpdateTargetId = "divAdmissions",
-		InsertionMode = InsertionMode.Replace
-	})
+	@Ajax.ActionLink("Back to List", "Index", "Admission", new { id = Model.PatientId }, new AjaxOptions
+{
+	HttpMethod = "GET",
+	UpdateTargetId = "divAdmissions",
+	InsertionMode = InsertionMode.Replace
+})
 </p>

@@ -54,7 +54,7 @@ namespace A4VG.Controllers
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
 
-			Patient p = PatientFromId(id);
+			Patient p = Consts.PatientFromId(id);
 			p = Consts.LoadAdmissionsList(p);
 			return View(p);
 		}
@@ -64,7 +64,7 @@ namespace A4VG.Controllers
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
 
-			return View(LoadDDLOptions(PatientFromId(id)));
+			return View(LoadDDLOptions(Consts.PatientFromId(id)));
 		}
 
 		[HttpPost]
@@ -74,7 +74,7 @@ namespace A4VG.Controllers
 
 			try
 			{
-				ctx.Entry(patient).State = System.Data.Entity.EntityState.Modified;
+				ctx.Entry(patient).State = EntityState.Modified;
 				ctx.SaveChanges();
 			}
 			catch (Exception e)
@@ -89,7 +89,7 @@ namespace A4VG.Controllers
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
 
-			return View(PatientFromId(id));
+			return View(Consts.PatientFromId(id));
 		}
 
 		[HttpPost, ActionName("Delete")]
@@ -109,14 +109,6 @@ namespace A4VG.Controllers
 			}
 			return RedirectToAction("Index");
 
-		}
-
-		private Patient PatientFromId(int id)
-		{
-			Patient patient = ctx.Patients
-				.Include(x => x.Doctor)
-				.Single(x => x.Id == id);
-			return patient;
 		}
 
 		private Patient LoadDDLOptions(Patient p)

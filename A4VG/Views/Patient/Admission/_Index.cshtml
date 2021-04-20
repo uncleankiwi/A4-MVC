@@ -1,4 +1,5 @@
-﻿@model A4VG.Models.Patient
+﻿@model IEnumerable<A4VG.Models.Admission>
+@using A4VG.Models
 
 <h4>Admissions</h4>
 <hr />
@@ -8,27 +9,27 @@
 <table class="table">
 	<tr>
 		<th>
-			@Html.DisplayNameFor(model => model.Admissions[0].Id)
+			@Html.DisplayNameFor(model => model.Id)
 		</th>
 		<th>
-			@Html.DisplayNameFor(model => model.Admissions[0].Admitted)
+			@Html.DisplayNameFor(model => model.Admitted)
 		</th>
 		<th>
-			@Html.DisplayNameFor(model => model.Admissions[0].Discharged)
+			@Html.DisplayNameFor(model => model.Discharged)
 		</th>
 		<th>
-			@Html.DisplayNameFor(model => model.Admissions[0].Unit)
+			@Html.DisplayNameFor(model => model.Unit)
 		</th>
 		<th>
-			@Html.DisplayNameFor(model => model.Admissions[0].Room)
+			@Html.DisplayNameFor(model => model.Room)
 		</th>
 		<th>
-			@Html.DisplayNameFor(model => model.Admissions[0].Bed)
+			@Html.DisplayNameFor(model => model.Bed)
 		</th>
 		<th></th>
 	</tr>
 
-	@foreach (var item in Model.Admissions)
+	@foreach (var item in Model)
 	{
 		<tr>
 			<td>
@@ -51,7 +52,13 @@
 			</td>
 			<td>
 				@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-				@Html.ActionLink("Details", "Details", new { id = item.Id }) |
+				@*@Html.ActionLink("Details", "Details", new { id = item.Id }) |*@
+				@Ajax.ActionLink("Details", "Details", "Admission", new { id = item.Id }, new AjaxOptions
+				{
+					HttpMethod = "GET",
+					UpdateTargetId = "divAdmissions",
+					InsertionMode = InsertionMode.Replace
+				}) |
 				@Html.ActionLink("Delete", "Delete", new { id = item.Id })
 			</td>
 		</tr>
