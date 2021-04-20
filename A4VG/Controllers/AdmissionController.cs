@@ -32,7 +32,7 @@ namespace A4VG.Controllers
 		public PartialViewResult Details(int admissionId)
 		{
 			Admission admission = AdmissionFromId(admissionId);
-			System.Diagnostics.Debug.WriteLine("details clicked " + admission.ToString());
+			System.Diagnostics.Debug.WriteLine("details clicked " + admission.ToString());	//TODO adsasd
 			return PartialView("~/Views/Admission/_Details.cshtml", AdmissionFromId(admissionId));
 		}
 

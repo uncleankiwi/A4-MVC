@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<A4VG.Models.Admission>
-@using A4VG.Models
 
 <h4>Admissions</h4>
 <hr />
@@ -57,7 +56,10 @@
 				{
 					HttpMethod = "GET",
 					UpdateTargetId = "divAdmissions",
-					InsertionMode = InsertionMode.Replace
+					InsertionMode = InsertionMode.Replace,
+					LoadingElementId = "divLoading",
+					OnBegin = "ClearResults",
+					OnSuccess = "CountRows"
 				}) |
 				@Html.ActionLink("Delete", "Delete", new { id = item.Id })
 			</td>
@@ -65,3 +67,20 @@
 	}
 
 </table>
+
+<script src="~/scripts/jquery-3.0.0.min.js" ></script>
+<script src="~/scripts/jquery.unobtrusive-ajax.min.js" ></script>
+<script type="text/javascript" langauge="javascript">
+	//clears divStudents while loading icon is displayed
+	//and the next request is being processed
+	//otherwise both will be displayed
+	function ClearResults() {
+		$("#divStudents").empty();
+	}
+
+	//-1 to avoid counting the header row
+	function CountRows() {
+		alert(($("#StudentsTable tr").length - 1)
+			+ ' rows retrieved');
+	}
+</script>
