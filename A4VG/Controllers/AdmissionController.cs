@@ -26,8 +26,10 @@ namespace A4VG.Controllers
 		// GET: Admission
 		public PartialViewResult Index(int patientId)
 		{
+			System.Diagnostics.Debug.WriteLine("index called");
 			Patient patient = Consts.PatientFromId(patientId);
 			patient = Consts.LoadAdmissionsList(patient);
+			System.Diagnostics.Debug.WriteLine("index end: pt name " + patient.Name);
 			return PartialView("~/Views/Admission/_Index.cshtml", patient);
 		}
 
