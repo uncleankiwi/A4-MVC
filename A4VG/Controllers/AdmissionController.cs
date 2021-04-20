@@ -21,9 +21,10 @@ namespace A4VG.Controllers
 		}
 
 		// GET: Admission/Details/5
-		public PartialViewResult Details(int id)
+		public PartialViewResult Details(Patient p)	//int id
 		{
-			return PartialView(AdmissionFromId(id));
+			p.AdmissionLookup = AdmissionFromId(p.AdmissionLookupId);
+			return PartialView(p);
 		}
 
 		//// GET: Admission/Create

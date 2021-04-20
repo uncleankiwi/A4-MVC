@@ -25,5 +25,12 @@ namespace A4VG.Models
 		public Doctor Doctor { get; set; }
 		public IEnumerable<SelectListItem> DoctorsList { get; set; }
 		public List<Admission> Admissions { get; set; }
+
+
+		public Admission AdmissionLookup { get; set; }
+		//for the partial views in patient details that are of Patient model but must
+		//lookup a certain Admission
+		[NotMapped]
+		public int AdmissionLookupId { get; set; }
 	}
 }
