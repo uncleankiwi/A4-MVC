@@ -1,5 +1,7 @@
 ﻿@model A4VG.Models.Patient
 
+<h4>Admissions</h4>
+<hr />
 <p>
 	@Html.ActionLink("Create New", "Create")
 </p>
@@ -26,32 +28,33 @@
 		<th></th>
 	</tr>
 
-@foreach (var item in Model.Admissions) {
-	<tr>
-		<td>
-			@Html.DisplayFor(modelItem => item.Id)
-		</td>
-		<td>
-			@Html.DisplayFor(modelItem => item.Admitted)
-		</td>
-		<td>
-			@Html.DisplayFor(modelItem => item.Discharged)
-		</td>
-		<td>
-			@Html.DisplayFor(modelItem => item.Unit)
-		</td>
-		<td>
-			@Html.DisplayFor(modelItem => item.Room)
-		</td>
-		<td>
-			@Html.DisplayFor(modelItem => item.Bed)
-		</td>
-		<td>
-			@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-			@Html.ActionLink("Details", "Details", new { id=item.Id }) |
-			@Html.ActionLink("Delete", "Delete", new { id=item.Id })
-		</td>
-	</tr>
-}
+	@foreach (var item in Model.Admissions)
+	{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.Id)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Admitted)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Discharged)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Unit)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Room)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Bed)
+			</td>
+			<td>
+				@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+				@Html.ActionLink("Details", "Details", new { id = item.Id }) |
+				@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+			</td>
+		</tr>
+	}
 
 </table>

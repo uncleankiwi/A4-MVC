@@ -20,11 +20,11 @@ namespace A4VG.Controllers
 			return PartialView("~/Views/Admission/_Index.cshtml", patient);
 		}
 
-		//// GET: Admission/Details/5
-		//public PartialViewResult Details(int id)
-		//{
-		//	return PartialView(AdmissionFromId(id));
-		//}
+		// GET: Admission/Details/5
+		public PartialViewResult Details(int id)
+		{
+			return PartialView(AdmissionFromId(id));
+		}
 
 		//// GET: Admission/Create
 		//public PartialViewResult Create()
@@ -47,7 +47,7 @@ namespace A4VG.Controllers
 		//		admission.ParseDateTime();
 		//		ctx.Admissions.Add(admission);
 		//		ctx.SaveChanges();
-				
+
 		//	}
 		//	catch (Exception e)
 		//	{

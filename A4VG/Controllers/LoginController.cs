@@ -18,6 +18,7 @@ namespace A4VG.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public ActionResult Do(Admin admin)
 		{
 			try
