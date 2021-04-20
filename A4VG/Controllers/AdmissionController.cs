@@ -7,7 +7,10 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using A4VG.Globals;
 
+//view to view:
 //patient details	admissions> index
+
+//action to action:
 //index				----pid---> create
 //					----aid---> details
 //					----aid---> edit
@@ -31,90 +34,95 @@ namespace A4VG.Controllers
 		// GET: Admission/Details/5
 		public PartialViewResult Details(int admissionId)
 		{
-			Admission admission = AdmissionFromId(admissionId);
-			System.Diagnostics.Debug.WriteLine("details clicked " + admission.ToString());	//TODO adsasd
 			return PartialView("~/Views/Admission/_Details.cshtml", AdmissionFromId(admissionId));
 		}
 
-		//// GET: Admission/Create
-		//public PartialViewResult Create()
-		//{
-		//	Admission admission = new Admission
-		//	{
-		//		Admitted = DateTime.Now
-		//	};
-		//	admission.InitDateTime();
-		//	return PartialView(admission);
-		//}
+		// GET: Admission/Create
+		public PartialViewResult Create(int patientId)
+		{
+			Admission admission = new Admission
+			{
+				Admitted = DateTime.Now
+			};
+			admission.InitDateTime();
+			admission.PatientId = patientId;
+			return PartialView(admission);
+		}
 
-		//// POST: Admission/Create
-		//[HttpPost]
-		//public PartialViewResult Create(Admission admission, int patientId)
-		//{
-		//	try
-		//	{
-		//		admission.PatientId = patientId;
-		//		admission.ParseDateTime();
-		//		ctx.Admissions.Add(admission);
-		//		ctx.SaveChanges();
+		// POST: Admission/Create
+		[HttpPost]
+		public PartialViewResult Create(Admission admission)
+		{
+			
+			try
+			{
+				int patientId = admission.PatientId;
+				admission.ParseDateTime();
+				ctx.Admissions.Add(admission);
+				ctx.SaveChanges();
+				return Index(patientId);
+			}
+			catch (Exception e)
+			{
+				System.Diagnostics.Debug.WriteLine("Error creating an admission: " + e.GetBaseException().ToString());
+			}
+			return null;
+		}
 
-		//	}
-		//	catch (Exception e)
-		//	{
-		//		System.Diagnostics.Debug.WriteLine("Error creating an admission: " + e.GetBaseException().ToString());
-		//	}
-		//	return Index(patientId);
-		//}
+		// GET: Admission/Edit/5
+		public PartialViewResult Edit(int admissionId)
+		{
+			Admission admission = AdmissionFromId(admissionId);
+			admission.InitDateTime();
+			return PartialView(admission);
+		}
 
-		//// GET: Admission/Edit/5
-		//public PartialViewResult Edit(int id)
-		//{
-		//	Admission admission = AdmissionFromId(id);
-		//	admission.InitDateTime();
-		//	return PartialView(admission);
-		//}
+		// POST: Admission/Edit/5
+		[HttpPost]
+		public PartialViewResult Edit(Admission admission)
+		{
+			
+			try
+			{
+				int patientId = admission.PatientId;
+				patientId = admission.PatientId;
+				admission.ParseDateTime();
+				ctx.Entry(admission).State = EntityState.Modified;
+				ctx.SaveChanges();
+				return Index(patientId);
+			}
+			catch (Exception e)
+			{
+				System.Diagnostics.Debug.WriteLine("Error editing an admission: " + e.GetBaseException().ToString());
+			}
+			return null;
+		}
 
-		//// POST: Admission/Edit/5
-		//[HttpPost]
-		//public PartialViewResult Edit(Admission admission, int patientId)
-		//{
-		//	try
-		//	{
-		//		admission.PatientId = patientId;
-		//		admission.ParseDateTime();
-		//		ctx.Entry(admission).State = EntityState.Modified;
-		//		ctx.SaveChanges();
-		//	}
-		//	catch (Exception e)
-		//	{
-		//		System.Diagnostics.Debug.WriteLine("Error editing an admission: " + e.GetBaseException().ToString());
-		//	}
-		//	return Index(patientId);
-		//}
+		// GET: Admission/Delete/5
+		public PartialViewResult Delete(int admissionId)
+		{
+			return PartialView("", AdmissionFromId(admissionId));
+		}
 
-		//// GET: Admission/Delete/5
-		//public PartialViewResult Delete(int id)
-		//{
-		//	return PartialView("", AdmissionFromId(id));
-		//}
+		// POST: Admission/Delete/5
+		[HttpPost, ActionName("Delete")]
+		public PartialViewResult DeleteConfirm(int admissionId)
+		{
+			try
+			{
 
-		//// POST: Admission/Delete/5
-		//[HttpPost, ActionName("Delete")]
-		//public PartialViewResult DeleteConfirm(int id, int patientId)
-		//{
-		//	try
-		//	{
-		//		Admission admission = ctx.Admissions.Single(x => x.Id == id);
-		//		ctx.Admissions.Remove(admission);
-		//		ctx.SaveChanges();
-		//		return Index();
-		//	}
-		//	catch (Exception e)
-		//	{
-		//		System.Diagnostics.Debug.WriteLine("Error deleting an admission: " + e.GetBaseException().ToString());
-		//	}
-		//	return Index(patientId);
-		//}
+				Admission admission = ctx.Admissions.Single(x => x.Id == admissionId);
+				int patientId = admission.PatientId;
+				ctx.Admissions.Remove(admission);
+				ctx.SaveChanges();
+				return Index(patientId);
+			}
+			catch (Exception e)
+			{
+				System.Diagnostics.Debug.WriteLine("Error deleting an admission: " + e.GetBaseException().ToString());
+			}
+			return null;
+		}
 
 		// ============ utility methods ============ 
 

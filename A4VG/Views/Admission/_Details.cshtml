@@ -55,14 +55,22 @@
 	</dl>
 </div>
 <p>
-	@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-	@*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
-	@*@Html.ActionLink("Back to List", "Index")*@
-	@Html.ActionLink("Back to List", "Index")
-	@Ajax.ActionLink("Back to List", "Index", "Admission", new { id = Model.PatientId }, new AjaxOptions
+	@Ajax.ActionLink("Edit", "Edit", "Admission", new { admissionId = Model.Id }, new AjaxOptions
+{
+   HttpMethod = "GET",
+   UpdateTargetId = "divAdmissions",
+   InsertionMode = InsertionMode.Replace,
+   LoadingElementId = "divLoading",
+   OnBegin = "ClearResults",
+   OnFailure = "FailEdit"
+}) |
+	@Ajax.ActionLink("Back to List", "Index", "Admission", new { patientId = Model.PatientId }, new AjaxOptions
 {
 	HttpMethod = "GET",
 	UpdateTargetId = "divAdmissions",
-	InsertionMode = InsertionMode.Replace
+	InsertionMode = InsertionMode.Replace,
+	LoadingElementId = "divLoading",
+	OnBegin = "ClearResults",
+	OnFailure = "FailIndex"
 })
 </p>
