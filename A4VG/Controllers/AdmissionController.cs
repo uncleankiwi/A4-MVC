@@ -89,7 +89,7 @@ namespace A4VG.Controllers
 		[HttpPost]
 		public PartialViewResult Edit(Admission admission)
 		{
-			
+			System.Diagnostics.Debug.WriteLine("in editing admission:" + admission.ToString());
 			try
 			{
 				int patientId = admission.PatientId;

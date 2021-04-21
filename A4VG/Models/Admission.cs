@@ -81,5 +81,19 @@ namespace A4VG.Models
 				this.Discharged = this.DischargedDate + this.DischargedTime.TimeOfDay;
 			}
 		}
+
+		override
+		public string ToString()
+		{
+			return "[Admission " +
+				" id:" + Id + 
+				" pid:" + PatientId +
+				" admitted:" + Admitted +
+				" discharged:" + Discharged +
+				" unit:" + Unit +
+				" room:" + Room +
+				" bed:" + Bed +
+				"]";
+		}
 	}
 }
