@@ -55,23 +55,6 @@ namespace A4VG.Globals
 			}
 		}
 
-		public static Patient LoadAdmissionsList(Patient p)
-		{
-			try
-			{
-				p.Admissions = ctx.Admissions
-				.Where(x => x.PatientId == p.Id)
-				.ToList();
-				return p;
-
-			}
-			catch (Exception e)
-			{
-				System.Diagnostics.Debug.WriteLine("Error loading admissions list: " + e.GetBaseException().ToString());
-				return null;
-			}
-		}
-
 		public static Patient PatientFromId(int id)
 		{
 			Patient patient = ctx.Patients

@@ -27,9 +27,11 @@ namespace A4VG.Controllers
 		public PartialViewResult Index(int patientId)
 		{
 			try 
-			{ 
+			{
 				Patient patient = Consts.PatientFromId(patientId);
-				patient = Consts.LoadAdmissionsList(patient);
+				patient = LoadAdmissionsList(patient);
+				System.Diagnostics.Debug.WriteLine("index ===============");//TODO remove
+				System.Diagnostics.Debug.WriteLine("first adm:" + patient.Admissions.ElementAt(0)); ;//TODO remove
 				return PartialView("~/Views/Patient/Admission/_Index.cshtml", patient);
 			}
 			catch (Exception e)
@@ -89,7 +91,7 @@ namespace A4VG.Controllers
 		[HttpPost]
 		public PartialViewResult Edit(Admission admission)
 		{
-			System.Diagnostics.Debug.WriteLine("in editing admission:" + admission.ToString());
+			System.Diagnostics.Debug.WriteLine("in editing admission:" + admission.ToString());		//TODO remove
 			try
 			{
 				int patientId = admission.PatientId;
@@ -138,6 +140,23 @@ namespace A4VG.Controllers
 		{
 			return ctx.Admissions
 				.Single(x => x.Id == id);
+		}
+
+		public Patient LoadAdmissionsList(Patient p)
+		{
+			try
+			{
+				p.Admissions = ctx.Admissions
+				.Where(x => x.PatientId == p.Id)
+				.ToList();
+				return p;
+
+			}
+			catch (Exception e)
+			{
+				System.Diagnostics.Debug.WriteLine("Error loading admissions list: " + e.GetBaseException().ToString());
+				return null;
+			}
 		}
 	}
 }

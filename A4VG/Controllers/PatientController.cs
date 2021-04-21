@@ -55,7 +55,7 @@ namespace A4VG.Controllers
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
 
 			Patient p = Consts.PatientFromId(id);
-			p = Consts.LoadAdmissionsList(p);
+			p = LoadAdmissionsList(p);
 			return View(p);
 		}
 
@@ -115,6 +115,23 @@ namespace A4VG.Controllers
 		{
 			p.DoctorsList = Consts.GetDoctorsDDL();
 			return p;
+		}
+
+		public Patient LoadAdmissionsList(Patient p)
+		{
+			try
+			{
+				p.Admissions = ctx.Admissions
+				.Where(x => x.PatientId == p.Id)
+				.ToList();
+				return p;
+
+			}
+			catch (Exception e)
+			{
+				System.Diagnostics.Debug.WriteLine("Error loading admissions list: " + e.GetBaseException().ToString());
+				return null;
+			}
 		}
 
 	}
