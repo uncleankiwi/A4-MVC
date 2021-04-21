@@ -5,19 +5,18 @@
 	<hr />
 	<dl class="dl-horizontal">
 		<dt>
-			@Html.DisplayNameFor(model => model.PatientId)
-		</dt>
-
-		<dd>
-			@Html.DisplayFor(model => model.PatientId)
-		</dd>
-
-		<dt>
 			@Html.DisplayNameFor(model => model.Admitted)
 		</dt>
 
 		<dd>
-			@Html.DisplayFor(model => model.Admitted)
+			@if (Model.Admitted == null)
+			{
+				@Html.Label("-")
+			}
+			else
+			{
+				@Html.DisplayFor(model => model.Admitted)
+			}
 		</dd>
 
 		<dt>
@@ -25,7 +24,14 @@
 		</dt>
 
 		<dd>
-			@Html.DisplayFor(model => model.Discharged)
+			@if (Model.Discharged == null)
+			{
+				@Html.Label("-")
+			}
+			else
+			{
+				@Html.DisplayFor(model => model.Discharged)
+			}
 		</dd>
 
 		<dt>

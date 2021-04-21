@@ -37,16 +37,30 @@
 	</tr>
 
 	@foreach (var item in Model.Admissions)
-	{
+		{
 		<tr>
 			<td>
 				@Html.DisplayFor(modelItem => item.Id)
 			</td>
 			<td>
-				@Html.DisplayFor(modelItem => item.Admitted)
+				@if (item.Admitted == null)
+				{
+					@Html.Label("-")
+				}
+				else
+				{
+					@Html.Label(item.Admitted.ToString())
+				}
 			</td>
 			<td>
-				@Html.DisplayFor(modelItem => item.Discharged)
+				@if (item.Discharged == null)
+				{
+					@Html.Label("-")
+				}
+				else
+				{
+					@Html.Label(item.Discharged.ToString())
+				}
 			</td>
 			<td>
 				@Html.DisplayFor(modelItem => item.Unit)
@@ -88,7 +102,7 @@
 			</td>
 		</tr>
 	}
-
+		
 </table>
 
 
