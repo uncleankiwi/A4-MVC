@@ -55,7 +55,7 @@
 
 	</dl>
 
-	@using (Ajax.BeginForm("Delete", "Admission", null, new AjaxOptions
+	@using (Ajax.BeginForm("Delete", "Admission", new { admissionID = Model.Id }, new AjaxOptions
 	{
 		HttpMethod = "POST",
 		UpdateTargetId = "divAdmissions",

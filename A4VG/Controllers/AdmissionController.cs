@@ -117,7 +117,7 @@ namespace A4VG.Controllers
 		{
 			try
 			{
-
+				System.Diagnostics.Debug.WriteLine("deleting " + admissionId); //todo remove del
 				Admission admission = ctx.Admissions.Single(x => x.Id == admissionId);
 				int patientId = admission.PatientId;
 				ctx.Admissions.Remove(admission);
