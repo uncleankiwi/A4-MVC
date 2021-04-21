@@ -18,6 +18,7 @@ namespace A4VG.Models
 		DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
 		public DateTime? Admitted { get; set; }
 
+		[Column(TypeName = "datetime2")]
 		[Display(Name = "Admission Date and Time"),
 		DataType(DataType.DateTime),
 		DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
