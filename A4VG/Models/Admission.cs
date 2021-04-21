@@ -19,7 +19,7 @@ namespace A4VG.Models
 		public DateTime? Admitted { get; set; }
 
 		[Column(TypeName = "datetime2")]
-		[Display(Name = "Admission Date and Time"),
+		[Display(Name = "Discharge Date and Time"),
 		DataType(DataType.DateTime),
 		DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
 		public DateTime? Discharged { get; set; }
@@ -31,22 +31,22 @@ namespace A4VG.Models
 		[NotMapped]
 		[DataType(DataType.Date)]
 		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
-		public DateTime AdmittedDate { get; set; }
+		public DateTime? AdmittedDate { get; set; }
 
 		[NotMapped]
 		[DataType(DataType.Time)]
 		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:mm}")]
-		public DateTime AdmittedTime { get; set; }
+		public DateTime? AdmittedTime { get; set; }
 
 		[NotMapped]
 		[DataType(DataType.Date)]
 		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
-		public DateTime DischargedDate { get; set; }
+		public DateTime? DischargedDate { get; set; }
 
 		[NotMapped]
 		[DataType(DataType.Time)]
 		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:mm}")]
-		public DateTime DischargedTime { get; set; }
+		public DateTime? DischargedTime { get; set; }
 
 		public Admission()
 		{
@@ -58,13 +58,23 @@ namespace A4VG.Models
 		{
 			if (this.Admitted != null)
 			{
-				this.AdmittedDate = (DateTime)this.Admitted;
-				this.AdmittedTime = (DateTime)this.Admitted;
+				this.AdmittedDate = this.Admitted;
+				this.AdmittedTime = this.Admitted;
+			}
+			else
+			{
+				this.AdmittedDate = null;
+				this.AdmittedTime = null;
 			}
 			if (this.Discharged != null)
 			{
-				this.DischargedDate = (DateTime)this.Discharged;
-				this.DischargedTime = (DateTime)this.Discharged;
+				this.DischargedDate = this.Discharged;
+				this.DischargedTime = this.Discharged;
+			}
+			else
+			{
+				this.DischargedDate = null;
+				this.DischargedTime = null;
 			}
 		}
 
@@ -73,12 +83,20 @@ namespace A4VG.Models
 		{
 			if (this.AdmittedDate != null & this.AdmittedTime != null)
 			{
-				this.Admitted = this.AdmittedDate + this.AdmittedTime.TimeOfDay;
+				this.Admitted = this.AdmittedDate + ((DateTime) this.AdmittedTime).TimeOfDay;
+			}
+			else //clear admitted time
+			{
+				this.Admitted = null;
 			}
 
 			if (this.DischargedDate != null & this.DischargedTime != null)
 			{
-				this.Discharged = this.DischargedDate + this.DischargedTime.TimeOfDay;
+				this.Discharged = this.DischargedDate + ((DateTime) this.DischargedTime).TimeOfDay;
+			}
+			else
+			{
+				this.Discharged = null;
 			}
 		}
 
