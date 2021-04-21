@@ -1,65 +1,111 @@
 ﻿@model A4VG.Models.Patient
 
 @{
-    ViewBag.Title = "Patient Details";
+	ViewBag.Title = "Patient Details";
 }
 
 
 <div>
-    <h4>Patient</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+	<h4>Patient</h4>
+	<hr />
+	<dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.Name)
+		</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+		<dd>
+			@Html.DisplayFor(model => model.Name)
+		</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+		<dt>
+			@Html.DisplayNameFor(model => model.Email)
+		</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+		<dd>
+			@Html.DisplayFor(model => model.Email)
+		</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Telephone)
-        </dt>
+		<dt>
+			@Html.DisplayNameFor(model => model.Telephone)
+		</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Telephone)
-        </dd>
+		<dd>
+			@Html.DisplayFor(model => model.Telephone)
+		</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
+		<dt>
+			@Html.DisplayNameFor(model => model.Address)
+		</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
+		<dd>
+			@Html.DisplayFor(model => model.Address)
+		</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Doctor)
-        </dt>
+		<dt>
+			@Html.DisplayNameFor(model => model.Doctor)
+		</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Doctor.Name)
-        </dd>
+		<dd>
+			@Html.DisplayFor(model => model.Doctor.Name)
+		</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DOB)
-        </dt>
+		<dt>
+			@Html.DisplayNameFor(model => model.DOB)
+		</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DOB)
-        </dd>
+		<dd>
+			@Html.DisplayFor(model => model.DOB)
+		</dd>
 
-    </dl>
+	</dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+	@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+	@Html.ActionLink("Back to List", "Index")
 </p>
+
+<script src="~/Scripts/jquery-3.0.0.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<div id="divLoading" style="
+	display: none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);">
+	<img src="~/Images/loading.gif" width="50"/>
+</div>
+
+<div id="divAdmissions" style="border: 1px dashed #90EE90; padding:5px;">
+	@Html.Partial("~/Views/Patient/Admission/_Index.cshtml", Model)
+</div>
+
+<script type="text/javascript" langauge="javascript">
+	//clears divStudents while loading icon is displayed
+	//and the next request is being processed
+	//otherwise both will be displayed
+	function ClearResults() {
+		$("#divStudents").empty();
+	}
+
+	function FailIndex() {
+		alert('Error retrieving admissions list.');
+	}
+
+	function FailDetails() {
+		alert('Error retrieving admission details.');
+	}
+
+	function FailEdit() {
+		alert('Error editing admission.');
+	}
+
+	function FailDelete() {
+		alert('Error deleting admission.');
+	}
+
+	function FailCreate() {
+		alert('Error creating admission.');
+	}
+</script>

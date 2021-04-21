@@ -77,7 +77,7 @@ namespace A4VG.Controllers
 			try
 			{
 				visit.ParseDateTime();
-				ctx.Entry(visit).State = System.Data.Entity.EntityState.Modified;
+				ctx.Entry(visit).State = EntityState.Modified;
 				ctx.SaveChanges();
 			}
 			catch(Exception e)
