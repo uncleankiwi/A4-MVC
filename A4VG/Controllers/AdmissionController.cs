@@ -8,7 +8,7 @@ using System.Data.Entity;
 using A4VG.Globals;
 
 //view to view:
-//patient details	admissions> index
+//patient details	-patient--> index
 
 //action to action:
 //index				----pid---> create
@@ -26,17 +26,23 @@ namespace A4VG.Controllers
 		// GET: Admission
 		public PartialViewResult Index(int patientId)
 		{
-			System.Diagnostics.Debug.WriteLine("index called");
-			Patient patient = Consts.PatientFromId(patientId);
-			patient = Consts.LoadAdmissionsList(patient);
-			System.Diagnostics.Debug.WriteLine("index end: pt name " + patient.Name);
-			return PartialView("~/Views/Admission/_Index.cshtml", patient);
+			try 
+			{ 
+				Patient patient = Consts.PatientFromId(patientId);
+				patient = Consts.LoadAdmissionsList(patient);
+				return PartialView("~/Views/Patient/Admission/_Index.cshtml", patient);
+			}
+			catch (Exception e)
+			{
+				System.Diagnostics.Debug.WriteLine("Error listing admissions: " + e.GetBaseException().ToString());
+			}
+			return null;
 		}
 
 		// GET: Admission/Details/5
 		public PartialViewResult Details(int admissionId)
 		{
-			return PartialView("~/Views/Admission/_Details.cshtml", AdmissionFromId(admissionId));
+			return PartialView("~/Views/Patient/Admission/_Details.cshtml", AdmissionFromId(admissionId));
 		}
 
 		// GET: Admission/Create
@@ -48,7 +54,7 @@ namespace A4VG.Controllers
 			};
 			admission.InitDateTime();
 			admission.PatientId = patientId;
-			return PartialView(admission);
+			return PartialView("~/Views/Patient/Admission/_Create.cshtml", admission);
 		}
 
 		// POST: Admission/Create
@@ -76,7 +82,7 @@ namespace A4VG.Controllers
 		{
 			Admission admission = AdmissionFromId(admissionId);
 			admission.InitDateTime();
-			return PartialView(admission);
+			return PartialView("~/Views/Patient/Admission/_Edit.cshtml", admission);
 		}
 
 		// POST: Admission/Edit/5
@@ -103,7 +109,7 @@ namespace A4VG.Controllers
 		// GET: Admission/Delete/5
 		public PartialViewResult Delete(int admissionId)
 		{
-			return PartialView("", AdmissionFromId(admissionId));
+			return PartialView("~/Views/Patient/Admission/_Delete.cshtml", AdmissionFromId(admissionId));
 		}
 
 		// POST: Admission/Delete/5
