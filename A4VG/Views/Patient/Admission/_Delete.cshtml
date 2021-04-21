@@ -2,73 +2,83 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Admission</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.PatientId)
-        </dt>
+	<h4>Admission</h4>
+	<hr />
+	<dl class="dl-horizontal">
+		@*<dt>
+				@Html.DisplayNameFor(model => model.PatientId)
+			</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.PatientId)
-        </dd>
+			<dd>
+				@Html.DisplayFor(model => model.PatientId)
+			</dd>*@
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Admitted)
-        </dt>
+		<dt>
+			@Html.DisplayNameFor(model => model.Admitted)
+		</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Admitted)
-        </dd>
+		<dd>
+			@Html.DisplayFor(model => model.Admitted)
+		</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Discharged)
-        </dt>
+		<dt>
+			@Html.DisplayNameFor(model => model.Discharged)
+		</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Discharged)
-        </dd>
+		<dd>
+			@Html.DisplayFor(model => model.Discharged)
+		</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Unit)
-        </dt>
+		<dt>
+			@Html.DisplayNameFor(model => model.Unit)
+		</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Unit)
-        </dd>
+		<dd>
+			@Html.DisplayFor(model => model.Unit)
+		</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Room)
-        </dt>
+		<dt>
+			@Html.DisplayNameFor(model => model.Room)
+		</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Room)
-        </dd>
+		<dd>
+			@Html.DisplayFor(model => model.Room)
+		</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Bed)
-        </dt>
+		<dt>
+			@Html.DisplayNameFor(model => model.Bed)
+		</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Bed)
-        </dd>
+		<dd>
+			@Html.DisplayFor(model => model.Bed)
+		</dd>
 
-    </dl>
+	</dl>
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
+	@using (Ajax.BeginForm("Delete", "Admission", null, new AjaxOptions
+	{
+		HttpMethod = "POST",
+		UpdateTargetId = "divAdmissions",
+		InsertionMode = InsertionMode.Replace,
+		LoadingElementId = "divLoading",
+		OnBegin = "ClearResults",
+		OnFailure = "FailDelete"
+	}))
+	{
+		@Html.AntiForgeryToken()
 
-<div class="form-actions no-color">
-	<input type="submit" value="Delete" class="btn btn-default" /> |
-	@Ajax.ActionLink("Back to List", "Index", "Admission", new { patientId = Model.PatientId }, new AjaxOptions
-{
-HttpMethod = "GET",
-UpdateTargetId = "divAdmissions",
-InsertionMode = InsertionMode.Replace,
-LoadingElementId = "divLoading",
-OnBegin = "ClearResults",
-OnFailure = "FailIndex"
-})
-</div>
-    }
+		<div class="form-actions no-color">
+
+			<input type="submit" value="Delete" class="btn btn-default" /> |
+			@Ajax.ActionLink("Back to List", "Index", "Admission", new { patientId = Model.PatientId }, new AjaxOptions
+			{
+			HttpMethod = "GET",
+			UpdateTargetId = "divAdmissions",
+			InsertionMode = InsertionMode.Replace,
+			LoadingElementId = "divLoading",
+			OnBegin = "ClearResults",
+			OnFailure = "FailIndex"
+			})
+		</div>
+	}
 </div>

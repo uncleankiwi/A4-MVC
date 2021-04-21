@@ -30,8 +30,6 @@ namespace A4VG.Controllers
 			{
 				Patient patient = Consts.PatientFromId(patientId);
 				patient = LoadAdmissionsList(patient);
-				System.Diagnostics.Debug.WriteLine("index ===============");//TODO remove
-				System.Diagnostics.Debug.WriteLine("first adm:" + patient.Admissions.ElementAt(0)); ;//TODO remove
 				return PartialView("~/Views/Patient/Admission/_Index.cshtml", patient);
 			}
 			catch (Exception e)
@@ -91,7 +89,6 @@ namespace A4VG.Controllers
 		[HttpPost]
 		public PartialViewResult Edit(Admission admission)
 		{
-			System.Diagnostics.Debug.WriteLine("in editing admission:" + admission.ToString());		//TODO remove
 			try
 			{
 				int patientId = admission.PatientId;
