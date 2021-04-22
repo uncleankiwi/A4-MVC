@@ -62,22 +62,21 @@ namespace A4VG.Controllers
 		[HttpPost]
 		public PartialViewResult Create(Admission admission)
 		{
-			
+			Admission admissionCopy = admission;
 			try
 			{
 				if (ModelState.IsValid)
 				{
-					//TODO sad
+					int patientId = admission.PatientId;
+					admission.ParseDateTime();
+					ctx.Admissions.Add(admission);
+					ctx.SaveChanges();
+					return Index(patientId);
 				}
 				else
 				{
-
+					return Create(admissionCopy);
 				}
-				int patientId = admission.PatientId;
-				admission.ParseDateTime();
-				ctx.Admissions.Add(admission);
-				ctx.SaveChanges();
-				return Index(patientId);
 			}
 			catch (Exception e)
 			{
@@ -98,22 +97,23 @@ namespace A4VG.Controllers
 		[HttpPost]
 		public PartialViewResult Edit(Admission admission)
 		{
+			Admission admissionCopy = admission;
 			try
 			{
 				if (ModelState.IsValid)
 				{
-					//TODO sadasf
+					int patientId = admission.PatientId;
+					patientId = admission.PatientId;
+					admission.ParseDateTime();
+					ctx.Entry(admission).State = EntityState.Modified;
+					ctx.SaveChanges();
+					return Index(patientId);
 				}
 				else
 				{
-
+					return Edit(admissionCopy);
 				}
-				int patientId = admission.PatientId;
-				patientId = admission.PatientId;
-				admission.ParseDateTime();
-				ctx.Entry(admission).State = EntityState.Modified;
-				ctx.SaveChanges();
-				return Index(patientId);
+				
 			}
 			catch (Exception e)
 			{

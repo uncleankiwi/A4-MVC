@@ -36,14 +36,14 @@ namespace A4VG.Controllers
 			{
 				if (ModelState.IsValid)
 				{
-					//TODO sadasf
+					ctx.Doctors.Add(doctor);
+					ctx.SaveChanges();
 				}
 				else
 				{
-
+					return View(doctor);
 				}
-				ctx.Doctors.Add(doctor);
-				ctx.SaveChanges();
+				
 			}
 			catch (Exception e)
 			{
@@ -76,14 +76,14 @@ namespace A4VG.Controllers
 			{
 				if (ModelState.IsValid)
 				{
-					//TODO sadasf
+					ctx.Entry(doctor).State = EntityState.Modified;
+					ctx.SaveChanges();
 				}
 				else
 				{
-
+					return View(doctor);
 				}
-				ctx.Entry(doctor).State = EntityState.Modified;
-				ctx.SaveChanges();
+				
 			}
 			catch (Exception e)
 			{

@@ -44,15 +44,15 @@ namespace A4VG.Controllers
 			{
 				if (ModelState.IsValid)
 				{
-					//TODO sadasf
+					visit.ParseDateTime();
+					ctx.Visits.Add(visit);
+					ctx.SaveChanges();
 				}
 				else
 				{
-
+					return View(visit);
 				}
-				visit.ParseDateTime();
-				ctx.Visits.Add(visit);
-				ctx.SaveChanges();
+				
 			}
 			catch (Exception e)
 			{
@@ -86,15 +86,14 @@ namespace A4VG.Controllers
 			{
 				if (ModelState.IsValid)
 				{
-					//TODO sadasf
+					visit.ParseDateTime();
+					ctx.Entry(visit).State = EntityState.Modified;
+					ctx.SaveChanges();
 				}
 				else
 				{
-
+					return View(visit);
 				}
-				visit.ParseDateTime();
-				ctx.Entry(visit).State = EntityState.Modified;
-				ctx.SaveChanges();
 			}
 			catch(Exception e)
 			{
