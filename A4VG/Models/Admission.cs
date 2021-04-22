@@ -26,13 +26,13 @@ namespace A4VG.Models
 		DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
 		public DateTime? Discharged { get; set; }
 
-		[MaxLength(50)]
+		[MaxLength(50, ErrorMessage = "{0} cannot be longer than {1} characters")]
 		public string Unit { get; set; }
 
-		[MaxLength(50)]
+		[MaxLength(50, ErrorMessage = "{0} cannot be longer than {1} characters")]
 		public string Room { get; set; }
 
-		[MaxLength(50)]
+		[MaxLength(50, ErrorMessage = "{0} cannot be longer than {1} characters")]
 		public string Bed { get; set; }
 
 		//---------------------------viewmodel attributes below---------------------------

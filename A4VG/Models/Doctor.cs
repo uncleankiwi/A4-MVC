@@ -12,14 +12,14 @@ namespace A4VG.Models
 	{
 		public int Id { get; set; }
 
-		[MaxLength(50)]
+		[MaxLength(50, ErrorMessage = "{0} cannot be longer than {1} characters")]
 		public string Office { get; set; }
 
 		[Required(ErrorMessage = "Enter the doctor's name")]
-		[MaxLength(50)]
+		[MaxLength(50, ErrorMessage = "{0} cannot be longer than {1} characters")]
 		public string Name { get; set; }
 
-		[MaxLength(50)]
+		[MaxLength(50, ErrorMessage = "{0} cannot be longer than {1} characters")]
 		[EmailAddress(ErrorMessage = "Enter a valid email address")]
 		public string Email { get; set; }
 
@@ -27,7 +27,7 @@ namespace A4VG.Models
 		[MaxLength(50, ErrorMessage = "{0} cannot be longer than {1} characters")]
 		public string Telephone { get; set; }
 
-		[MaxLength(50)]
+		[MaxLength(50, ErrorMessage = "{0} cannot be longer than {1} characters")]
 		[Required(ErrorMessage = "Enter the doctor's address")]
 		public string Address { get; set; }
 	}

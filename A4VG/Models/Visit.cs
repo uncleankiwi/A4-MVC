@@ -25,7 +25,7 @@ namespace A4VG.Models
 			DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
 		public DateTime DateAndTime { get; set; }
 
-		[MaxLength(300)]
+		[MaxLength(300, ErrorMessage = "{0} cannot be longer than {1} characters")]
 		public string Complaint { get; set; }
 
 

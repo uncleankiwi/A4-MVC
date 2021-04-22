@@ -15,17 +15,17 @@ namespace A4VG.Models
 		public int Id { get; set; }
 
 		[Required(ErrorMessage = "Enter the patient's name")]
-		[MaxLength(50)]
+		[MaxLength(50, ErrorMessage = "{0} cannot be longer than {1} characters")]
 		public string Name { get; set; }
 
-		[MaxLength(50)]
+		[MaxLength(50, ErrorMessage = "{0} cannot be longer than {1} characters")]
 		[EmailAddress(ErrorMessage = "Enter a valid email address")]
 		public string Email { get; set; }
 
-		[MaxLength(50)]
+		[MaxLength(50, ErrorMessage = "{0} cannot be longer than {1} characters")]
 		public string Telephone { get; set; }
 
-		[MaxLength(50)]
+		[MaxLength(50, ErrorMessage = "{0} cannot be longer than {1} characters")]
 		public string Address { get; set; }
 
 		[Display(Name = "Doctor")]
