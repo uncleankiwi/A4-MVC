@@ -13,15 +13,31 @@ namespace A4VG.Models
 	public class Patient
 	{
 		public int Id { get; set; }
+
+		[Required(ErrorMessage = "Enter the patient's name")]
+		[MaxLength(50)]
 		public string Name { get; set; }
+
+		[MaxLength(50)]
+		[EmailAddress(ErrorMessage = "Enter a valid email address")]
 		public string Email { get; set; }
+
+		[MaxLength(50)]
 		public string Telephone { get; set; }
+
+		[MaxLength(50)]
 		public string Address { get; set; }
+
 		[Display(Name = "Doctor")]
 		public int DoctorId { get; set; }
+
+		[Required(ErrorMessage = "Enter the patient's date of birth")]
 		[DataType(DataType.Date)]
 		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
 		public DateTime DOB { get; set; }
+
+		//---------------------------viewmodel attributes below---------------------------
+		//--------------------------------------------------------------------------------
 		public Doctor Doctor { get; set; }
 		public IEnumerable<SelectListItem> DoctorsList { get; set; }
 		public List<Admission> Admissions { get; set; }

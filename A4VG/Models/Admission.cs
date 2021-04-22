@@ -11,6 +11,8 @@ namespace A4VG.Models
 	public class Admission
 	{
 		public int Id { get; set; }
+
+		[Required(ErrorMessage = "Select a patient")]
 		public int PatientId { get; set; }
 
 		[Display(Name = "Admission Date and Time"),
@@ -24,10 +26,17 @@ namespace A4VG.Models
 		DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
 		public DateTime? Discharged { get; set; }
 
+		[MaxLength(50)]
 		public string Unit { get; set; }
+
+		[MaxLength(50)]
 		public string Room { get; set; }
+
+		[MaxLength(50)]
 		public string Bed { get; set; }
 
+		//---------------------------viewmodel attributes below---------------------------
+		//--------------------------------------------------------------------------------
 		[NotMapped]
 		[DataType(DataType.Date)]
 		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
