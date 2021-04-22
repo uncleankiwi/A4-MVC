@@ -47,7 +47,7 @@ namespace A4VG.Controllers
 				}
 				else
 				{
-					return View(patient);
+					return Create();
 				}
 				
 			}
@@ -89,7 +89,7 @@ namespace A4VG.Controllers
 				}
 				else
 				{
-					return View(patient);
+					return Edit(patient.Id);
 				}
 				
 			}

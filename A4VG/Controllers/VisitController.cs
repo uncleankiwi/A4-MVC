@@ -50,7 +50,7 @@ namespace A4VG.Controllers
 				}
 				else
 				{
-					return View(visit);
+					return Create();
 				}
 				
 			}
@@ -92,7 +92,7 @@ namespace A4VG.Controllers
 				}
 				else
 				{
-					return View(visit);
+					return Edit(visit.Id);
 				}
 			}
 			catch(Exception e)

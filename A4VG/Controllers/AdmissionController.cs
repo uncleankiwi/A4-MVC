@@ -62,7 +62,6 @@ namespace A4VG.Controllers
 		[HttpPost]
 		public PartialViewResult Create(Admission admission)
 		{
-			Admission admissionCopy = admission;
 			try
 			{
 				if (ModelState.IsValid)
@@ -75,7 +74,7 @@ namespace A4VG.Controllers
 				}
 				else
 				{
-					return Create(admissionCopy);
+					return Create(admission.PatientId);
 				}
 			}
 			catch (Exception e)
@@ -97,7 +96,6 @@ namespace A4VG.Controllers
 		[HttpPost]
 		public PartialViewResult Edit(Admission admission)
 		{
-			Admission admissionCopy = admission;
 			try
 			{
 				if (ModelState.IsValid)
@@ -111,7 +109,7 @@ namespace A4VG.Controllers
 				}
 				else
 				{
-					return Edit(admissionCopy);
+					return Edit(admission.Id);
 				}
 				
 			}
