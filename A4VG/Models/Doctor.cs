@@ -28,7 +28,7 @@ namespace A4VG.Models
 		public string Telephone { get; set; }
 
 		[MaxLength(50)]
-		[Required]
+		[Required(ErrorMessage = "Enter the doctor's address")]
 		public string Address { get; set; }
 	}
 }

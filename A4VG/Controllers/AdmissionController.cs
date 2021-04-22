@@ -55,6 +55,7 @@ namespace A4VG.Controllers
 			admission.InitDateTime();
 			admission.PatientId = patientId;
 			return PartialView("~/Views/Patient/Admission/_Create.cshtml", admission);
+
 		}
 
 		// POST: Admission/Create
@@ -64,6 +65,14 @@ namespace A4VG.Controllers
 			
 			try
 			{
+				if (ModelState.IsValid)
+				{
+					//TODO sad
+				}
+				else
+				{
+
+				}
 				int patientId = admission.PatientId;
 				admission.ParseDateTime();
 				ctx.Admissions.Add(admission);
@@ -91,6 +100,14 @@ namespace A4VG.Controllers
 		{
 			try
 			{
+				if (ModelState.IsValid)
+				{
+					//TODO sadasf
+				}
+				else
+				{
+
+				}
 				int patientId = admission.PatientId;
 				patientId = admission.PatientId;
 				admission.ParseDateTime();

@@ -42,6 +42,14 @@ namespace A4VG.Controllers
 
 			try
 			{
+				if (ModelState.IsValid)
+				{
+					//TODO sadasf
+				}
+				else
+				{
+
+				}
 				visit.ParseDateTime();
 				ctx.Visits.Add(visit);
 				ctx.SaveChanges();
@@ -76,6 +84,14 @@ namespace A4VG.Controllers
 
 			try
 			{
+				if (ModelState.IsValid)
+				{
+					//TODO sadasf
+				}
+				else
+				{
+
+				}
 				visit.ParseDateTime();
 				ctx.Entry(visit).State = EntityState.Modified;
 				ctx.SaveChanges();
