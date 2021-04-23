@@ -42,9 +42,17 @@ namespace A4VG.Controllers
 
 			try
 			{
-				visit.ParseDateTime();
-				ctx.Visits.Add(visit);
-				ctx.SaveChanges();
+				if (ModelState.IsValid)
+				{
+					visit.ParseDateTime();
+					ctx.Visits.Add(visit);
+					ctx.SaveChanges();
+				}
+				else
+				{
+					return Create();
+				}
+				
 			}
 			catch (Exception e)
 			{
@@ -76,9 +84,16 @@ namespace A4VG.Controllers
 
 			try
 			{
-				visit.ParseDateTime();
-				ctx.Entry(visit).State = EntityState.Modified;
-				ctx.SaveChanges();
+				if (ModelState.IsValid)
+				{
+					visit.ParseDateTime();
+					ctx.Entry(visit).State = EntityState.Modified;
+					ctx.SaveChanges();
+				}
+				else
+				{
+					return Edit(visit.Id);
+				}
 			}
 			catch(Exception e)
 			{
@@ -123,12 +138,16 @@ namespace A4VG.Controllers
 				.Single(x => x.Id == id);
 		}
 
+		//loads lists of patients and doctors who can be assigned to a visit
 		private Visit LoadDDLOptions(Visit v)
 		{
 			v.PatientsList = Consts.GetPatientsDDL();
 			v.DoctorsList = Consts.GetDoctorsDDL();
 			return v;
 		}
+
+		//loads lists of patients and doctors who can be assigned to a visit
+		//but this one also adds (main) prefix to a patient's main doctor
 
 		private Visit LoadMainDoctorDDLOptions(Visit v)
 		{

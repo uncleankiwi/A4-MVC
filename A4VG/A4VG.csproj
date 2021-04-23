@@ -277,6 +277,7 @@
     <Content Include="Views\Patient\Admission\_Create.cshtml" />
     <Content Include="Views\Patient\Admission\_Edit.cshtml" />
     <Content Include="Views\Patient\Admission\_Delete.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

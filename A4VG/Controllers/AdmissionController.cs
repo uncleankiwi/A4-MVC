@@ -28,7 +28,9 @@ namespace A4VG.Controllers
 		{
 			try 
 			{
-				Patient patient = Consts.PatientFromId(patientId);
+				Patient patient = ctx.Patients
+					.Include(x => x.Doctor)
+					.Single(x => x.Id == patientId);
 				patient = LoadAdmissionsList(patient);
 				return PartialView("~/Views/Patient/Admission/_Index.cshtml", patient);
 			}
@@ -55,20 +57,27 @@ namespace A4VG.Controllers
 			admission.InitDateTime();
 			admission.PatientId = patientId;
 			return PartialView("~/Views/Patient/Admission/_Create.cshtml", admission);
+
 		}
 
 		// POST: Admission/Create
 		[HttpPost]
 		public PartialViewResult Create(Admission admission)
 		{
-			
 			try
 			{
-				int patientId = admission.PatientId;
-				admission.ParseDateTime();
-				ctx.Admissions.Add(admission);
-				ctx.SaveChanges();
-				return Index(patientId);
+				if (ModelState.IsValid)
+				{
+					int patientId = admission.PatientId;
+					admission.ParseDateTime();
+					ctx.Admissions.Add(admission);
+					ctx.SaveChanges();
+					return Index(patientId);
+				}
+				else
+				{
+					return Create(admission.PatientId);
+				}
 			}
 			catch (Exception e)
 			{
@@ -91,12 +100,20 @@ namespace A4VG.Controllers
 		{
 			try
 			{
-				int patientId = admission.PatientId;
-				patientId = admission.PatientId;
-				admission.ParseDateTime();
-				ctx.Entry(admission).State = EntityState.Modified;
-				ctx.SaveChanges();
-				return Index(patientId);
+				if (ModelState.IsValid)
+				{
+					int patientId = admission.PatientId;
+					patientId = admission.PatientId;
+					admission.ParseDateTime();
+					ctx.Entry(admission).State = EntityState.Modified;
+					ctx.SaveChanges();
+					return Index(patientId);
+				}
+				else
+				{
+					return Edit(admission.Id);
+				}
+				
 			}
 			catch (Exception e)
 			{
@@ -132,12 +149,14 @@ namespace A4VG.Controllers
 
 		// ============ utility methods ============ 
 
+		//finding an admission by admissionId
 		private Admission AdmissionFromId(int id)
 		{
 			return ctx.Admissions
 				.Single(x => x.Id == id);
 		}
 
+		//putting a patient's past admission history into the patient object
 		public Patient LoadAdmissionsList(Patient p)
 		{
 			try
