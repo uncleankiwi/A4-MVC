@@ -31,11 +31,20 @@ namespace A4VG.Models
 
 		//---------------------------viewmodel attributes below---------------------------
 		//--------------------------------------------------------------------------------
+		
+		//doctor object referenced by doctorId
 		public Doctor Doctor { get; set; }
+
+		//patient object referenced by patientId
 		public Patient Patient { get; set; }
+
+		//list of patients who can be assigned to this visit
 		public IEnumerable<SelectListItem> PatientsList { get; set; }
+
+		//list of doctors who can be assigned to this visit
 		public IEnumerable<SelectListItem> DoctorsList { get; set; }
 
+		//visit DateTime is split into the following two for editing/creation, then put back together in the db
 		[NotMapped]
 		[DataType(DataType.Date)]
 		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]

@@ -37,6 +37,8 @@ namespace A4VG.Models
 
 		//---------------------------viewmodel attributes below---------------------------
 		//--------------------------------------------------------------------------------
+
+		//admission and discharge DateTimme both split into date and time for creation and editing, then put back again
 		[NotMapped]
 		[DataType(DataType.Date)]
 		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]

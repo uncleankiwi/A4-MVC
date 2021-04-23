@@ -119,6 +119,7 @@ namespace A4VG.Controllers
 			return RedirectToAction("Index");
 		}
 
+		//view from doctorId
 		private ActionResult ViewFromId(int id)
 		{
 			Doctor doctor = ctx.Doctors.Single(x => x.Id == id); //or context.Doctors.Find(id);

@@ -138,12 +138,16 @@ namespace A4VG.Controllers
 				.Single(x => x.Id == id);
 		}
 
+		//loads lists of patients and doctors who can be assigned to a visit
 		private Visit LoadDDLOptions(Visit v)
 		{
 			v.PatientsList = Consts.GetPatientsDDL();
 			v.DoctorsList = Consts.GetDoctorsDDL();
 			return v;
 		}
+
+		//loads lists of patients and doctors who can be assigned to a visit
+		//but this one also adds (main) prefix to a patient's main doctor
 
 		private Visit LoadMainDoctorDDLOptions(Visit v)
 		{

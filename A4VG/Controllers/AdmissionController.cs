@@ -147,12 +147,14 @@ namespace A4VG.Controllers
 
 		// ============ utility methods ============ 
 
+		//finding an admission by admissionId
 		private Admission AdmissionFromId(int id)
 		{
 			return ctx.Admissions
 				.Single(x => x.Id == id);
 		}
 
+		//putting a patient's past admission history into the patient object
 		public Patient LoadAdmissionsList(Patient p)
 		{
 			try

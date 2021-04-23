@@ -127,12 +127,15 @@ namespace A4VG.Controllers
 
 		}
 
+
+		//loads a list of doctors who can be assigned to this patient
 		private Patient LoadDDLOptions(Patient p)
 		{
 			p.DoctorsList = Consts.GetDoctorsDDL();
 			return p;
 		}
 
+		//loads a patient's admissions list while displaying patient details
 		public Patient LoadAdmissionsList(Patient p)
 		{
 			try

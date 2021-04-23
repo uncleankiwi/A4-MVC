@@ -38,12 +38,16 @@ namespace A4VG.Models
 
 		//---------------------------viewmodel attributes below---------------------------
 		//--------------------------------------------------------------------------------
+		
+		//the patient's main doctor, as object
 		public Doctor Doctor { get; set; }
+
+		//drop down list of doctors who can be assigned to this patient
 		public IEnumerable<SelectListItem> DoctorsList { get; set; }
+		
+		//list of this patient's admissions in the past
 		public List<Admission> Admissions { get; set; }
 
-		[NotMapped]
-		public Admission AdmissionLookup { get; set; }
 		//for the partial views in patient details that are of Patient model but must
 		//lookup a certain Admission
 		[NotMapped]
