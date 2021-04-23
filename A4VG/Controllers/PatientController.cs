@@ -62,7 +62,7 @@ namespace A4VG.Controllers
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
 
-			Patient p = Consts.PatientFromId(id);
+			Patient p = PatientFromId(id);
 			p = LoadAdmissionsList(p);
 			return View(p);
 		}
@@ -72,7 +72,7 @@ namespace A4VG.Controllers
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
 
-			return View(LoadDDLOptions(Consts.PatientFromId(id)));
+			return View(LoadDDLOptions(PatientFromId(id)));
 		}
 
 		[HttpPost]
@@ -105,7 +105,7 @@ namespace A4VG.Controllers
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
 
-			return View(Consts.PatientFromId(id));
+			return View(PatientFromId(id));
 		}
 
 		[HttpPost, ActionName("Delete")]
@@ -151,6 +151,15 @@ namespace A4VG.Controllers
 				System.Diagnostics.Debug.WriteLine("Error loading admissions list: " + e.GetBaseException().ToString());
 				return null;
 			}
+		}
+
+		//patient from patient Id
+		public Patient PatientFromId(int id)
+		{
+			Patient patient = ctx.Patients
+				.Include(x => x.Doctor)
+				.Single(x => x.Id == id);
+			return patient;
 		}
 
 	}

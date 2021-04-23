@@ -28,7 +28,9 @@ namespace A4VG.Controllers
 		{
 			try 
 			{
-				Patient patient = Consts.PatientFromId(patientId);
+				Patient patient = ctx.Patients
+					.Include(x => x.Doctor)
+					.Single(x => x.Id == patientId);
 				patient = LoadAdmissionsList(patient);
 				return PartialView("~/Views/Patient/Admission/_Index.cshtml", patient);
 			}

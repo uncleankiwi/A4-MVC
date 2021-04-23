@@ -61,14 +61,5 @@ namespace A4VG.Globals
 
 			}
 		}
-
-		//patient from patient Id
-		public static Patient PatientFromId(int id)
-		{
-			Patient patient = ctx.Patients
-				.Include(x => x.Doctor)
-				.Single(x => x.Id == id);
-			return patient;
-		}
 	}
 } 
