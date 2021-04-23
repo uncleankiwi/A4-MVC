@@ -47,11 +47,13 @@ namespace A4VG.Models
 		//visit DateTime is split into the following two for editing/creation, then put back together in the db
 		[NotMapped]
 		[DataType(DataType.Date)]
+		[Required(ErrorMessage = "Enter a valid date for the visit")]
 		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
 		public DateTime Date { get; set; }
 
 		[NotMapped]
 		[DataType(DataType.Time)]
+		[Required(ErrorMessage = "Enter a valid time for the visit")]
 		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:mm}")]
 		public DateTime Time { get; set; }
 		public Visit()
