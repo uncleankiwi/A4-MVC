@@ -13,12 +13,17 @@ namespace A4VG.Controllers
 	{
 		readonly Context ctx = new Context();
 
-		public ActionResult Index()
+		public ActionResult Index(string searchBy, string search)
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
-
-			return View(ctx.Patients
-				.Include(x => x.Doctor));
+			if (searchBy == "Telephone")
+			{
+				return View(ctx.Patients.Where(x => x.Telephone.Contains(search) || search== null).Include(x => x.Doctor));
+			}
+            else
+            {
+				return View(ctx.Patients.Where(x => x.Name.StartsWith(search) || search == null).Include(x => x.Doctor));
+			}
 		}
 
 		[HttpGet]

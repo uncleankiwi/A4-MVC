@@ -12,11 +12,20 @@ namespace A4VG.Controllers
 	public class DoctorController : Controller
 	{
 		readonly Context ctx = new Context();
-		public ActionResult Index()
+
+		public ActionResult Index(string searchBy, string search)
+
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
 
-			return View(new Context().Doctors);
+			if (searchBy == "Telephone")
+			{
+				return View(new Context().Doctors.Where(x => x.Telephone.Contains(search) || search == null));
+			}
+            else
+            {
+				return View(new Context().Doctors.Where(x => x.Name.StartsWith(search) || search==null));
+			}
 		}
 
 		[HttpGet]
