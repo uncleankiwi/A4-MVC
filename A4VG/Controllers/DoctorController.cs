@@ -12,7 +12,9 @@ namespace A4VG.Controllers
 	public class DoctorController : Controller
 	{
 		readonly Context ctx = new Context();
+
 		public ActionResult Index(string searchBy, string search)
+
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
 
