@@ -11,15 +11,19 @@ namespace A4VG.Controllers
 {
 	public class VisitController : Controller
 	{
-		Context ctx = new Context();
+		readonly Context ctx = new Context();
 
-		public ActionResult Index()
+		public ActionResult Index(string searchBy, string search)
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
-
-			return View(ctx.Visits
-				.Include(x => x.Doctor)
-				.Include(x => x.Patient));
+			if (searchBy == "Complaint")
+			{
+				return View(ctx.Visits.Where(x => x.Complaint.StartsWith(search) || search == null).Include(x => x.Doctor).Include(x => x.Patient));
+			}
+            else
+            {
+				return View(ctx.Visits.Where(x => x.Patient.Name.StartsWith(search) || search == null).Include(x => x.Doctor).Include(x => x.Patient));
+			}
 		}
 
 		[HttpGet]
@@ -27,7 +31,12 @@ namespace A4VG.Controllers
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
 
-			return View(LoadDDLOptions(new Visit()));
+			Visit visit = new Visit
+			{
+				DateAndTime = DateTime.Now
+			};
+			visit.InitDateTime();
+			return View(LoadDDLOptions(visit));
 		}
 
 		[HttpPost]
@@ -37,12 +46,21 @@ namespace A4VG.Controllers
 
 			try
 			{
-				ctx.Visits.Add(visit);
-				ctx.SaveChanges();
+				if (ModelState.IsValid)
+				{
+					visit.ParseDateTime();
+					ctx.Visits.Add(visit);
+					ctx.SaveChanges();
+				}
+				else
+				{
+					return Create();
+				}
+				
 			}
 			catch (Exception e)
 			{
-				System.Diagnostics.Debug.WriteLine(e.Message);
+				System.Diagnostics.Debug.WriteLine("Error creating a visit: " + e.GetBaseException().ToString());
 			}
 			return RedirectToAction("Index");
 		}
@@ -58,8 +76,9 @@ namespace A4VG.Controllers
 		public ActionResult Edit(int id)
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
-
-			return View(LoadDDLOptions(VisitFromId(id)));
+			Visit visit = LoadMainDoctorDDLOptions(VisitFromId(id));
+			visit.InitDateTime();
+			return View(visit);
 		}
 
 		[HttpPost]
@@ -69,12 +88,20 @@ namespace A4VG.Controllers
 
 			try
 			{
-				ctx.Entry(visit).State = System.Data.Entity.EntityState.Modified;
-				ctx.SaveChanges();
+				if (ModelState.IsValid)
+				{
+					visit.ParseDateTime();
+					ctx.Entry(visit).State = EntityState.Modified;
+					ctx.SaveChanges();
+				}
+				else
+				{
+					return Edit(visit.Id);
+				}
 			}
 			catch(Exception e)
 			{
-				System.Diagnostics.Debug.WriteLine(e.Message);
+				System.Diagnostics.Debug.WriteLine("Error editing a visit: " + e.GetBaseException().ToString());
 			}
 
 			return RedirectToAction("Index");
@@ -92,10 +119,18 @@ namespace A4VG.Controllers
 		public ActionResult DeleteConfirm(int id)
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
-
+			try
+			{
+				
 			Visit visit = ctx.Visits.Single(x => x.Id == id);
 			ctx.Visits.Remove(visit);
 			ctx.SaveChanges();
+			return RedirectToAction("Index");
+			}
+			catch (Exception e)
+			{
+				System.Diagnostics.Debug.WriteLine("Error deleting a visit: " + e.GetBaseException().ToString());
+			}
 			return RedirectToAction("Index");
 		}
 
@@ -107,10 +142,21 @@ namespace A4VG.Controllers
 				.Single(x => x.Id == id);
 		}
 
+		//loads lists of patients and doctors who can be assigned to a visit
 		private Visit LoadDDLOptions(Visit v)
 		{
 			v.PatientsList = Consts.GetPatientsDDL();
 			v.DoctorsList = Consts.GetDoctorsDDL();
+			return v;
+		}
+
+		//loads lists of patients and doctors who can be assigned to a visit
+		//but this one also adds (main) prefix to a patient's main doctor
+
+		private Visit LoadMainDoctorDDLOptions(Visit v)
+		{
+			v.PatientsList = Consts.GetPatientsDDL();
+			v.DoctorsList = Consts.GetDoctorsDDLWithMainDoctor(v.Patient);
 			return v;
 		}
 	}

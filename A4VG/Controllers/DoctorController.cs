@@ -11,12 +11,19 @@ namespace A4VG.Controllers
 {
 	public class DoctorController : Controller
 	{
-		Context ctx = new Context();
-		public ActionResult Index()
+		readonly Context ctx = new Context();
+		public ActionResult Index(string searchBy, string search)
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
 
-			return View(new Context().Doctors);
+			if (searchBy == "Telephone")
+			{
+				return View(new Context().Doctors.Where(x => x.Telephone.Contains(search) || search == null));
+			}
+            else
+            {
+				return View(new Context().Doctors.Where(x => x.Name.StartsWith(search) || search==null));
+			}
 		}
 
 		[HttpGet]
@@ -34,12 +41,20 @@ namespace A4VG.Controllers
 
 			try
 			{
-				ctx.Doctors.Add(doctor);
-				ctx.SaveChanges();
+				if (ModelState.IsValid)
+				{
+					ctx.Doctors.Add(doctor);
+					ctx.SaveChanges();
+				}
+				else
+				{
+					return Create();
+				}
+				
 			}
 			catch (Exception e)
 			{
-				System.Diagnostics.Debug.WriteLine(e.Message);
+				System.Diagnostics.Debug.WriteLine("Error creating a doctor: " + e.GetBaseException().ToString());
 			}
 			return RedirectToAction("Index");
 		}
@@ -66,12 +81,20 @@ namespace A4VG.Controllers
 
 			try
 			{
-				ctx.Entry(doctor).State = EntityState.Modified;
-				ctx.SaveChanges();
+				if (ModelState.IsValid)
+				{
+					ctx.Entry(doctor).State = EntityState.Modified;
+					ctx.SaveChanges();
+				}
+				else
+				{
+					return Edit(doctor.Id);
+				}
+				
 			}
 			catch (Exception e)
 			{
-				System.Diagnostics.Debug.WriteLine(e.Message);
+				System.Diagnostics.Debug.WriteLine("Error editing a doctor: " + e.GetBaseException().ToString());
 			}
 			return RedirectToAction("Index");
 		}
@@ -88,13 +111,22 @@ namespace A4VG.Controllers
 		public ActionResult DeleteConfirm(int id)
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
-
-			Doctor doctor = ctx.Doctors.Single(x => x.Id == id);
-			ctx.Doctors.Remove(doctor);
-			ctx.SaveChanges();
+			try
+			{
+				Doctor doctor = ctx.Doctors.Single(x => x.Id == id);
+				ctx.Doctors.Remove(doctor);
+				ctx.SaveChanges();
+				return RedirectToAction("Index");
+			}
+			catch (Exception e)
+			{
+				//System.Data.SqlClient.SqlException: trying to delete a doctor referenced in a patient/visit
+				System.Diagnostics.Debug.WriteLine("Error deleting a doctor: " + e.GetBaseException().ToString());
+			}
 			return RedirectToAction("Index");
 		}
 
+		//view from doctorId
 		private ActionResult ViewFromId(int id)
 		{
 			Doctor doctor = ctx.Doctors.Single(x => x.Id == id); //or context.Doctors.Find(id);

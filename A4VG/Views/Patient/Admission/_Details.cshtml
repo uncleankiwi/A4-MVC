@@ -1,0 +1,82 @@
+﻿@model A4VG.Models.Admission
+
+<div>
+	<h4>Admission</h4>
+	<hr />
+	<dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.Admitted)
+		</dt>
+
+		<dd>
+			@if (Model.Admitted == null)
+			{
+				@Html.Label("-")
+			}
+			else
+			{
+				@Html.DisplayFor(model => model.Admitted)
+			}
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Discharged)
+		</dt>
+
+		<dd>
+			@if (Model.Discharged == null)
+			{
+				@Html.Label("-")
+			}
+			else
+			{
+				@Html.DisplayFor(model => model.Discharged)
+			}
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Unit)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Unit)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Room)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Room)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Bed)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Bed)
+		</dd>
+
+	</dl>
+</div>
+<p>
+	@Ajax.ActionLink("Edit", "Edit", "Admission", new { admissionId = Model.Id }, new AjaxOptions
+{
+   HttpMethod = "GET",
+   UpdateTargetId = "divAdmissions",
+   InsertionMode = InsertionMode.Replace,
+   LoadingElementId = "divLoading",
+   OnBegin = "ClearResults",
+   OnFailure = "FailEdit"
+}) |
+	@Ajax.ActionLink("Back to List", "Index", "Admission", new { patientId = Model.PatientId }, new AjaxOptions
+{
+	HttpMethod = "GET",
+	UpdateTargetId = "divAdmissions",
+	InsertionMode = InsertionMode.Replace,
+	LoadingElementId = "divLoading",
+	OnBegin = "ClearResults",
+	OnFailure = "FailIndex"
+})
+</p>

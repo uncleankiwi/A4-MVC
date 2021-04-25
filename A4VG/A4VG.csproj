@@ -108,6 +108,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
+    <Content Include="Images\loading.gif" />
     <Content Include="Images\pharmacy.png" />
     <Content Include="Images\rockcliffe.jpg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -138,6 +139,8 @@
     <Content Include="Scripts\jquery-3.0.0.min.js" />
     <Content Include="Scripts\jquery-3.0.0.slim.js" />
     <Content Include="Scripts\jquery-3.0.0.slim.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
@@ -213,6 +216,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdmissionController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -223,6 +227,7 @@
     </Compile>
     <Compile Include="Globals\Consts.cs" />
     <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\Admission.cs" />
     <Compile Include="Models\Context.cs" />
     <Compile Include="Models\Doctor.cs" />
     <Compile Include="Models\Patient.cs" />
@@ -267,6 +272,12 @@
     <Content Include="Views\Shared\_Navbar.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
+    <Content Include="Views\Patient\Admission\_Index.cshtml" />
+    <Content Include="Views\Patient\Admission\_Details.cshtml" />
+    <Content Include="Views\Patient\Admission\_Create.cshtml" />
+    <Content Include="Views\Patient\Admission\_Edit.cshtml" />
+    <Content Include="Views\Patient\Admission\_Delete.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

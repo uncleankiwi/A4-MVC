@@ -9,7 +9,7 @@ namespace A4VG.Controllers
 {
 	public class LoginController : Controller
 	{
-		Context ctx = new Context();
+		readonly Context ctx = new Context();
 
 		[HttpGet]
 		public ActionResult Do()
@@ -18,6 +18,7 @@ namespace A4VG.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public ActionResult Do(Admin admin)
 		{
 			try

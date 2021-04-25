@@ -12,5 +12,6 @@ namespace A4VG.Models
 		public DbSet<Patient> Patients { get; set; }
 		public DbSet<Visit> Visits { get; set; }
 		public DbSet<Admin> Admins { get; set; }
+		public DbSet<Admission> Admissions { get; set; }
 	}
 }
