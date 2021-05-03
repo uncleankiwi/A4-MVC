@@ -13,12 +13,17 @@ namespace A4VG.Controllers
 	{
 		readonly Context ctx = new Context();
 
-		public ActionResult Index()
+		public ActionResult Index(string searchBy, string search)
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
-
-			return View(ctx.Patients
-				.Include(x => x.Doctor));
+			if (searchBy == "Telephone")
+			{
+				return View(ctx.Patients.Where(x => x.Telephone.Contains(search) || search== null).Include(x => x.Doctor));
+			}
+            else
+            {
+				return View(ctx.Patients.Where(x => x.Name.StartsWith(search) || search == null).Include(x => x.Doctor));
+			}
 		}
 
 		[HttpGet]
@@ -40,8 +45,16 @@ namespace A4VG.Controllers
 
 			try
 			{
-				ctx.Patients.Add(patient);
-				ctx.SaveChanges();
+				if (ModelState.IsValid)
+				{
+					ctx.Patients.Add(patient);
+					ctx.SaveChanges();
+				}
+				else
+				{
+					return Create();
+				}
+				
 			}
 			catch (Exception e)
 			{
@@ -54,7 +67,7 @@ namespace A4VG.Controllers
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
 
-			Patient p = Consts.PatientFromId(id);
+			Patient p = PatientFromId(id);
 			p = LoadAdmissionsList(p);
 			return View(p);
 		}
@@ -64,7 +77,7 @@ namespace A4VG.Controllers
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
 
-			return View(LoadDDLOptions(Consts.PatientFromId(id)));
+			return View(LoadDDLOptions(PatientFromId(id)));
 		}
 
 		[HttpPost]
@@ -74,8 +87,16 @@ namespace A4VG.Controllers
 
 			try
 			{
-				ctx.Entry(patient).State = EntityState.Modified;
-				ctx.SaveChanges();
+				if (ModelState.IsValid)
+				{
+					ctx.Entry(patient).State = EntityState.Modified;
+					ctx.SaveChanges();
+				}
+				else
+				{
+					return Edit(patient.Id);
+				}
+				
 			}
 			catch (Exception e)
 			{
@@ -89,7 +110,7 @@ namespace A4VG.Controllers
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
 
-			return View(Consts.PatientFromId(id));
+			return View(PatientFromId(id));
 		}
 
 		[HttpPost, ActionName("Delete")]
@@ -111,12 +132,15 @@ namespace A4VG.Controllers
 
 		}
 
+
+		//loads a list of doctors who can be assigned to this patient
 		private Patient LoadDDLOptions(Patient p)
 		{
 			p.DoctorsList = Consts.GetDoctorsDDL();
 			return p;
 		}
 
+		//loads a patient's admissions list while displaying patient details
 		public Patient LoadAdmissionsList(Patient p)
 		{
 			try
@@ -132,6 +156,15 @@ namespace A4VG.Controllers
 				System.Diagnostics.Debug.WriteLine("Error loading admissions list: " + e.GetBaseException().ToString());
 				return null;
 			}
+		}
+
+		//patient from patient Id
+		public Patient PatientFromId(int id)
+		{
+			Patient patient = ctx.Patients
+				.Include(x => x.Doctor)
+				.Single(x => x.Id == id);
+			return patient;
 		}
 
 	}

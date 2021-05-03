@@ -10,9 +10,12 @@ namespace A4VG.Globals
 {
 	public class Consts
 	{
+		//session variable storing the currently logged in admin's username
 		public const string ADMIN_NAME = "AdminName";
+
 		readonly static Context ctx = new Context();
 
+		//getting a list of doctors in a drop down list
 		public static IEnumerable<SelectListItem> GetDoctorsDDL()
 		{
 			//.Select() is kind of like .stream()?
@@ -24,6 +27,7 @@ namespace A4VG.Globals
 			});
 		}
 
+		//getting a list of patients in a drop down list
 		public static IEnumerable<SelectListItem> GetPatientsDDL()
 		{
 			return ctx.Patients.ToList().Select(x => new SelectListItem
@@ -33,6 +37,7 @@ namespace A4VG.Globals
 			});
 		}
 
+		//getting a list of doctors in a drop down list, with the indicated patient's main doctor marked with (main)
 		public static IEnumerable<SelectListItem> GetDoctorsDDLWithMainDoctor(Patient patient)
 		{
 			return ctx.Doctors.ToList().Select(x => new SelectListItem
@@ -42,6 +47,8 @@ namespace A4VG.Globals
 			});
 		}
 
+		//check if user is logged in.
+		//if not, redirect to login page
 		public static void CheckIfLoggedIn(HttpContext httpContext)
 		{
 			if (httpContext.Session[ADMIN_NAME] == null)
@@ -53,14 +60,6 @@ namespace A4VG.Globals
 				});
 
 			}
-		}
-
-		public static Patient PatientFromId(int id)
-		{
-			Patient patient = ctx.Patients
-				.Include(x => x.Doctor)
-				.Single(x => x.Id == id);
-			return patient;
 		}
 	}
 } 

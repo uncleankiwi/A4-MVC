@@ -13,13 +13,17 @@ namespace A4VG.Controllers
 	{
 		readonly Context ctx = new Context();
 
-		public ActionResult Index()
+		public ActionResult Index(string searchBy, string search)
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
-
-			return View(ctx.Visits
-				.Include(x => x.Doctor)
-				.Include(x => x.Patient));
+			if (searchBy == "Complaint")
+			{
+				return View(ctx.Visits.Where(x => x.Complaint.StartsWith(search) || search == null).Include(x => x.Doctor).Include(x => x.Patient));
+			}
+            else
+            {
+				return View(ctx.Visits.Where(x => x.Patient.Name.StartsWith(search) || search == null).Include(x => x.Doctor).Include(x => x.Patient));
+			}
 		}
 
 		[HttpGet]
@@ -42,9 +46,17 @@ namespace A4VG.Controllers
 
 			try
 			{
-				visit.ParseDateTime();
-				ctx.Visits.Add(visit);
-				ctx.SaveChanges();
+				if (ModelState.IsValid)
+				{
+					visit.ParseDateTime();
+					ctx.Visits.Add(visit);
+					ctx.SaveChanges();
+				}
+				else
+				{
+					return Create();
+				}
+				
 			}
 			catch (Exception e)
 			{
@@ -76,9 +88,16 @@ namespace A4VG.Controllers
 
 			try
 			{
-				visit.ParseDateTime();
-				ctx.Entry(visit).State = EntityState.Modified;
-				ctx.SaveChanges();
+				if (ModelState.IsValid)
+				{
+					visit.ParseDateTime();
+					ctx.Entry(visit).State = EntityState.Modified;
+					ctx.SaveChanges();
+				}
+				else
+				{
+					return Edit(visit.Id);
+				}
 			}
 			catch(Exception e)
 			{
@@ -123,12 +142,16 @@ namespace A4VG.Controllers
 				.Single(x => x.Id == id);
 		}
 
+		//loads lists of patients and doctors who can be assigned to a visit
 		private Visit LoadDDLOptions(Visit v)
 		{
 			v.PatientsList = Consts.GetPatientsDDL();
 			v.DoctorsList = Consts.GetDoctorsDDL();
 			return v;
 		}
+
+		//loads lists of patients and doctors who can be assigned to a visit
+		//but this one also adds (main) prefix to a patient's main doctor
 
 		private Visit LoadMainDoctorDDLOptions(Visit v)
 		{

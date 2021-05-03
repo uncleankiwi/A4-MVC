@@ -12,11 +12,20 @@ namespace A4VG.Controllers
 	public class DoctorController : Controller
 	{
 		readonly Context ctx = new Context();
-		public ActionResult Index()
+
+		public ActionResult Index(string searchBy, string search)
+
 		{
 			Consts.CheckIfLoggedIn(System.Web.HttpContext.Current);
 
-			return View(new Context().Doctors);
+			if (searchBy == "Telephone")
+			{
+				return View(new Context().Doctors.Where(x => x.Telephone.Contains(search) || search == null));
+			}
+            else
+            {
+				return View(new Context().Doctors.Where(x => x.Name.StartsWith(search) || search==null));
+			}
 		}
 
 		[HttpGet]
@@ -34,8 +43,16 @@ namespace A4VG.Controllers
 
 			try
 			{
-				ctx.Doctors.Add(doctor);
-				ctx.SaveChanges();
+				if (ModelState.IsValid)
+				{
+					ctx.Doctors.Add(doctor);
+					ctx.SaveChanges();
+				}
+				else
+				{
+					return Create();
+				}
+				
 			}
 			catch (Exception e)
 			{
@@ -66,8 +83,16 @@ namespace A4VG.Controllers
 
 			try
 			{
-				ctx.Entry(doctor).State = EntityState.Modified;
-				ctx.SaveChanges();
+				if (ModelState.IsValid)
+				{
+					ctx.Entry(doctor).State = EntityState.Modified;
+					ctx.SaveChanges();
+				}
+				else
+				{
+					return Edit(doctor.Id);
+				}
+				
 			}
 			catch (Exception e)
 			{
@@ -103,6 +128,7 @@ namespace A4VG.Controllers
 			return RedirectToAction("Index");
 		}
 
+		//view from doctorId
 		private ActionResult ViewFromId(int id)
 		{
 			Doctor doctor = ctx.Doctors.Single(x => x.Id == id); //or context.Doctors.Find(id);
