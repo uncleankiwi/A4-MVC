@@ -111,6 +111,7 @@
     <Content Include="Images\loading.gif" />
     <Content Include="Images\pharmacy.png" />
     <Content Include="Images\rockcliffe.jpg" />
+    <Content Include="Preview\preview.PNG" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
